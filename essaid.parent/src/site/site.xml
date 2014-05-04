@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
+  name="OWL Document API" xmlns="http://maven.apache.org/DECORATION/1.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <publishDate position="bottom" format="yyyy-MM-dd" />
+  <version position="bottom" />
+
+  <custom>
+    <reflowSkin>
+
+      <topNav>Home|Documentation|Tools|Contribute</topNav>
+      <bottomNav maxSpan="9">
+        <column>Main|Tools</column>
+        <column>Download|Contribute</column>
+        <column>Documentation</column>
+        <column>Generated Reports</column>
+      </bottomNav>
+
+      <toc>top</toc>
+      <tocTopMax>6</tocTopMax>
+
+    </reflowSkin>
+  </custom>
+
+<!--   <body> -->
+
+<!--     <menu ref="parent" inherit="top" /> -->
+<!--     <menu name="Generated Reports" inherit="bottom"> -->
+<!--       <item name="Project Information" ref="reports" collapse="true" /> -->
+<!--     </menu> -->
+
+<!--   </body> -->
+
+  <skin>
+    <groupId>lt.velykis.maven.skins</groupId>
+    <artifactId>reflow-maven-skin</artifactId>
+    <version>1.1.0</version>
+  </skin>
+
+</project>
