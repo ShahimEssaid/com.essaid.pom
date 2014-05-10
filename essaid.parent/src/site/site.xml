@@ -2,13 +2,20 @@
 <project xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
   name="OWL Document API" xmlns="http://maven.apache.org/DECORATION/1.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
+  <!-- <bannerLeft> -->
+  <!-- <name>Override bannerLeft's name</name> -->
+  <!-- </bannerLeft> -->
+
+  <!-- <bannerRight> -->
+  <!-- <name>Override</name> -->
+  <!-- </bannerRight> -->
 
   <publishDate position="bottom" format="yyyy-MM-dd" />
   <version position="bottom" />
 
   <custom>
     <reflowSkin>
-
+      <!-- <theme>bootswatch-simplex</theme> -->
       <topNav>Home|Documentation|Tools|Contribute</topNav>
       <bottomNav maxSpan="9">
         <column>Main|Tools</column>
@@ -23,14 +30,14 @@
     </reflowSkin>
   </custom>
 
-<!--   <body> -->
+  <!-- <body> -->
 
-<!--     <menu ref="parent" inherit="top" /> -->
-<!--     <menu name="Generated Reports" inherit="bottom"> -->
-<!--       <item name="Project Information" ref="reports" collapse="true" /> -->
-<!--     </menu> -->
+  <!-- <menu ref="parent" inherit="top" /> -->
+  <!-- <menu name="Generated Reports" inherit="bottom"> -->
+  <!-- <item name="Project Information" ref="reports" collapse="true" /> -->
+  <!-- </menu> -->
 
-<!--   </body> -->
+  <!-- </body> -->
 
   <skin>
     <groupId>lt.velykis.maven.skins</groupId>

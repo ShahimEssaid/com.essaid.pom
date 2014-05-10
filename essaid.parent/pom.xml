@@ -37,7 +37,13 @@
     <github.global.server>github</github.global.server>
 
     <!-- Versioning properties -->
-    <maven.version>3.1</maven.version>
+
+    <maven.version>3.2.1</maven.version>
+    <maven.plugin-plugin.version>3.3</maven.plugin-plugin.version>
+    <maven.plugin-tools.version>3.3</maven.plugin-tools.version>
+    <maven.plugin-testing.version>3.1.0</maven.plugin-testing.version>
+    <sisu.plugin.version>0.2.0</sisu.plugin.version>
+    <!-- <plexus.metadata.version>1.5.5</plexus.metadata.version> -->
 
     <gpg.plugin.version>1.5</gpg.plugin.version>
     <tycho.version>0.20.0</tycho.version>
@@ -56,6 +62,10 @@
     <github.site.plugin.version>0.8</github.site.plugin.version>
     <javadoc.plugin.version>2.9.1</javadoc.plugin.version>
     <source.plugin.version>2.2.1</source.plugin.version>
+    <scala.version>2.11.0</scala.version>
+    <scala.plugin.version>3.1.6</scala.plugin.version>
+    <scalatest.plugin.version>1.0-RC2</scalatest.plugin.version>
+    <xtend.version>2.5.4</xtend.version>
 
     <!-- To help with site generation and staging -->
     <stage.base.directory>/srv/pass-through/git/gerrit.essaid.com/ShahimEssaidSites</stage.base.directory>
@@ -63,9 +73,7 @@
     <stage.directory>${stage.base.directory}/${stage.location}/maven.site/${project.version}</stage.directory>
     <stage.staging>${stage.directory}/staging</stage.staging>
 
-
   </properties>
-
 
   <build>
     <plugins>
@@ -77,35 +85,15 @@
             <goals>
               <goal>attach-descriptor</goal>
             </goals>
+            <inherited>false</inherited>
           </execution>
         </executions>
-
       </plugin>
     </plugins>
   </build>
 
 
   <profiles>
-
-    <!-- Sonatype OSSRH distribution profile -->
-    <profile>
-      <id>sonatype.distribution.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/sonatype.distribution</exists>
-        </file>
-      </activation>
-      <distributionManagement>
-        <repository>
-          <id>sonatype.staging.repository</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-        </repository>
-        <snapshotRepository>
-          <id>sonatype.snapshot.repository</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-      </distributionManagement>
-    </profile>
 
     <!-- Essaid distribution profile -->
     <profile>
@@ -114,6 +102,9 @@
         <file>
           <exists>${basedir}/.mvnconfig/essaid.public.distribution</exists>
         </file>
+        <property>
+          <name>essaid.public.distribution</name>
+        </property>
       </activation>
       <distributionManagement>
         <repository>
@@ -123,6 +114,29 @@
         <snapshotRepository>
           <id>essaid.public.snapshot.repository</id>
           <url>https://nexus.essaid.com:1443/content/repositories/snapshots</url>
+        </snapshotRepository>
+      </distributionManagement>
+    </profile>
+
+    <!-- Sonatype OSSRH distribution profile -->
+    <profile>
+      <id>sonatype.distribution.profile</id>
+      <activation>
+        <file>
+          <exists>${basedir}/.mvnconfig/sonatype.distribution</exists>
+        </file>
+        <property>
+          <name>sonatype.distribution</name>
+        </property>
+      </activation>
+      <distributionManagement>
+        <repository>
+          <id>sonatype.staging.repository</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+          <id>sonatype.snapshot.repository</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
       </distributionManagement>
     </profile>
@@ -167,11 +181,247 @@
           <plugin>
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>tycho-maven-plugin</artifactId>
-            <version>${tycho.plugin.version}</version>
             <extensions>true</extensions>
           </plugin>
         </plugins>
       </build>
+    </profile>
+
+    <!-- Maven build profile -->
+    <profile>
+      <id>maven.build.profile</id>
+      <activation>
+        <file>
+          <exists>${basedir}/.mvnconfig/maven</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-plugin-plugin</artifactId>
+            <configuration>
+              <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+            </configuration>
+            <executions>
+              <execution>
+                <id>mojo.goals</id>
+                <goals>
+                  <goal>descriptor</goal>
+                  <goal>helpmojo</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>mojo.report</id>
+                <phase>site</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.eclipse.sisu</groupId>
+            <artifactId>sisu-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sisu.index</id>
+                <goals>
+                  <goal>main-index</goal>
+                  <goal>test-index</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.maven</groupId>
+          <artifactId>maven-core</artifactId>
+          <version>${maven.version}</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.maven</groupId>
+          <artifactId>maven-compat</artifactId>
+          <version>${maven.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.maven.plugin-tools</groupId>
+          <artifactId>maven-plugin-annotations</artifactId>
+          <version>${maven.plugin-tools.version}</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.maven.plugin-testing</groupId>
+          <artifactId>maven-plugin-testing-tools</artifactId>
+          <version>${maven.plugin-testing.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.maven.plugin-testing</groupId>
+          <artifactId>maven-plugin-testing-harness</artifactId>
+          <version>${maven.plugin-testing.version}</version>
+          <scope>test</scope>
+        </dependency>
+
+        <!-- <dependency> -->
+        <!-- <groupId>org.codehaus.plexus</groupId> -->
+        <!-- <artifactId>plexus-utils</artifactId> -->
+        <!-- <version>3.0.17</version> -->
+        <!-- </dependency> -->
+      </dependencies>
+    </profile>
+
+    <!-- Scala build profile -->
+    <profile>
+      <id>scala.build.profile</id>
+      <activation>
+        <file>
+          <exists>${basedir}/.mvnconfig/scala</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.alchim31.maven</groupId>
+            <artifactId>scala-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>scala.compiler.first</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                  <goal>compile</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>scala-test-compile</id>
+                <phase>process-test-resources</phase>
+                <goals>
+                  <goal>testCompile</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>compile</phase>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.scala-lang</groupId>
+          <artifactId>scala-library</artifactId>
+          <version>${scala.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <!-- ScalaTest profile -->
+    <profile>
+      <id>scalatest.profile</id>
+      <activation>
+        <file>
+          <exists>${basedir}/.mvnconfig/scalatest</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <!-- http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin -->
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest-maven-plugin</artifactId>
+            <configuration>
+              <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+              <junitxml>.</junitxml>
+              <filereports>WDF TestSuite.txt</filereports>
+            </configuration>
+            <executions>
+              <execution>
+                <id>test</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <!-- http://doc.scalatest.org/2.1.5/index.html#org.scalatest.tools.Runner$@configuringReporters -->
+                  <!-- http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin -->
+                  <stdout>WSI</stdout>
+                  <!-- <stderr>WSI</stderr> -->
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <skipTests>true</skipTests>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.scalatest</groupId>
+          <artifactId>scalatest_2.11</artifactId>
+          <version>2.1.6</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <!-- Xtend build profile -->
+    <profile>
+      <id>xtend.build.profile</id>
+      <activation>
+        <file>
+          <exists>${basedir}/.mvnconfig/xtend</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.xtend</groupId>
+            <artifactId>xtend-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>compile</goal>
+                  <!-- <goal>testCompile</goal> -->
+                </goals>
+                <!-- By default the plugin will look for eclipse settings, and if non were found will generate to -->
+                <!-- ${basedir}/src/main/generated-sources/xtend -->
+                <!-- You can optionally configure a different target folder like so : -->
+                <!-- <configuration> <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory> <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory> 
+                  </configuration> -->
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.eclipse.xtend</groupId>
+          <artifactId>org.eclipse.xtend.lib</artifactId>
+          <version>${xtend.version}</version>
+        </dependency>
+      </dependencies>
     </profile>
 
     <!-- Source and Javadoc attachements build profile -->
@@ -310,34 +560,6 @@
       </build>
     </profile>
 
-    <!-- custom staging profile -->
-    <!-- <profile> -->
-    <!-- <id>custom.stage.profile</id> -->
-    <!-- <activation> -->
-    <!-- <file> -->
-    <!-- <exists>${basedir}/.mvnconfig/custom.stage</exists> -->
-    <!-- </file> -->
-    <!-- </activation> -->
-    <!-- <build> -->
-    <!-- <plugins> -->
-    <!-- <plugin> -->
-    <!-- <artifactId>maven-site-plugin</artifactId> -->
-    <!-- <executions> -->
-    <!-- <execution> -->
-    <!-- <id>custom.staging.goal</id> -->
-    <!-- <phase>site</phase> -->
-    <!-- <goals> -->
-    <!-- <goal>stage</goal> -->
-    <!-- </goals> -->
-    <!-- <configuration> -->
-    <!-- <stagingDirectory>${stage.staging}</stagingDirectory> -->
-    <!-- </configuration> -->
-    <!-- </execution> -->
-    <!-- </executions> -->
-    <!-- </plugin> -->
-    <!-- </plugins> -->
-    <!-- </build> -->
-    <!-- </profile> -->
 
     <!-- custom post-site profile -->
     <profile>
@@ -369,6 +591,9 @@
                       <fileset dir="${stage.staging}/../staging" includes="**/*" />
                     </move>
                     <delete dir="${stage.staging}/../staging" includeemptydirs="true" />
+                    <filter token="PROJECT_VERSION" value="${project.version}" />
+                    <copy file="${basedir}/src/site/index.html" todir="${stage.staging}/../staging/../../../"
+                      filtering="true" />
                   </target>
 
                 </configuration>
@@ -534,6 +759,75 @@
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-gpg-plugin</artifactId>
               <version>${gpg.plugin.version}</version>
+            </plugin>
+            <plugin>
+              <groupId>net.alchim31.maven</groupId>
+              <artifactId>scala-maven-plugin</artifactId>
+              <version>${scala.plugin.version}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.scalatest</groupId>
+              <artifactId>scalatest-maven-plugin</artifactId>
+              <version>${scalatest.plugin.version}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-plugin-plugin</artifactId>
+              <version>${maven.plugin-plugin.version}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.eclipse.xtend</groupId>
+              <artifactId>xtend-maven-plugin</artifactId>
+              <version>${xtend.version}</version>
+            </plugin>
+            <plugin>
+              <groupId>org.eclipse.sisu</groupId>
+              <artifactId>sisu-maven-plugin</artifactId>
+              <version>${sisu.plugin.version}</version>
+            </plugin>
+
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven 
+              build itself. -->
+            <plugin>
+              <groupId>org.eclipse.m2e</groupId>
+              <artifactId>lifecycle-mapping</artifactId>
+              <version>1.0.0</version>
+              <configuration>
+                <lifecycleMappingMetadata>
+                  <pluginExecutions>
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>scala-maven-plugin</artifactId>
+                        <versionRange>[3.1.6,)</versionRange>
+                        <goals>
+                          <goal>add-source</goal>
+                          <goal>testCompile</goal>
+                          <goal>compile</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore></ignore>
+                      </action>
+                    </pluginExecution>
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.eclipse.sisu</groupId>
+                        <artifactId>sisu-maven-plugin</artifactId>
+                        <versionRange>[0.2.0,)</versionRange>
+                        <goals>
+                          <goal>test-index</goal>
+                          <goal>main-index</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore></ignore>
+                      </action>
+                    </pluginExecution>
+
+                  </pluginExecutions>
+                </lifecycleMappingMetadata>
+              </configuration>
             </plugin>
           </plugins>
 
