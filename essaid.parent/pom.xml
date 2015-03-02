@@ -40,6 +40,7 @@
   </distributionManagement>
 
   <properties>
+    <maven.build.timestamp.format>yyyy-MM-dd'_'HH.mm.ss'_UTC'</maven.build.timestamp.format>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <github.global.server>github</github.global.server>
     <github.repository.name>maven.poms</github.repository.name>
@@ -62,7 +63,9 @@
     <tycho.target.version></tycho.target.version>
 
     <!-- plugin versions -->
-    <antrun.plugin.version>1.7</antrun.plugin.version>
+    <ant.version>1.7.0</ant.version>
+    <antrun.plugin.version>1.8</antrun.plugin.version>
+    <ant-contrib.plugin.version>1.0b3</ant-contrib.plugin.version>
     <clean.plugin.version>2.5</clean.plugin.version>
     <compiler.plugin.version>3.1</compiler.plugin.version>
     <install.plugin.version>2.5.1</install.plugin.version>
@@ -87,15 +90,55 @@
     <tycho.plugin.version>${tycho.version}</tycho.plugin.version>
 
     <!-- To help with site generation and staging -->
-    <!-- The next line has to be in an active profile in settings.xml -->
-    <!-- <stage.base.directory>/srv/pass-through/git/gerrit.essaid.com/ShahimEssaidSites</stage.base.directory> -->
-    <top.stage.directory>${stage.base.directory}/${github.repository.name}/maven.site/${project.version}</top.stage.directory>
+    <staging.root>${user.home}/.m2/staging-root</staging.root>
+    <staging.name>staging-job</staging.name>
+    <staging.git.branch>gh-pages</staging.git.branch>
+    <staging.git.branch.dev>gh-pages-dev</staging.git.branch.dev>
+    <staging.cleanup>true</staging.cleanup>
+    <staging.job>${staging.root}/${staging.name}/${maven.build.timestamp}</staging.job>
+    <staging.version>${staging.job}/version/${project.version}</staging.version>
 
   </properties>
 
   <build>
     <plugins>
+      <!-- <plugin> -->
+      <!-- <inherited>true</inherited> -->
+      <!-- <groupId>org.codehaus.mojo</groupId> -->
+      <!-- <artifactId>build-helper-maven-plugin</artifactId> -->
+      <!-- <version>1.9.1</version> -->
+      <!-- <executions> -->
+      <!-- <execution> -->
+      <!-- <id>filesafe.timestamp</id> -->
+      <!-- <phase>validate</phase> -->
+      <!-- <goals> -->
+      <!-- <goal>regex-property</goal> -->
+      <!-- </goals> -->
+      <!-- <configuration> -->
+      <!-- <name>essaid.timestamp</name> -->
+      <!-- <regex>:</regex> -->
+      <!-- <value>${maven.build.timestamp}</value> -->
+      <!-- <replacement>.</replacement> -->
+      <!-- </configuration> -->
+      <!-- </execution> -->
+      <!-- <execution> -->
+      <!-- <id>stage.version.property</id> -->
+      <!-- <phase>validate</phase> -->
+      <!-- <goals> -->
+      <!-- <goal>regex-property</goal> -->
+      <!-- </goals> -->
+      <!-- <configuration> -->
+      <!-- <name>essaid.timestamp</name> -->
+      <!-- <regex>:</regex> -->
+      <!-- <value>${maven.build.timestamp</value> -->
+      <!-- <replacement>.</replacement> -->
+      <!-- </configuration> -->
+      <!-- </execution> -->
+      <!-- </executions> -->
+
+      <!-- </plugin> -->
       <plugin>
+        <inherited>false</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.5.3</version>
@@ -824,6 +867,227 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>pre-site.gitcheck</id>
+                <phase>pre-site</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+                    <if>
+                      <resourceexists>
+                        <file file="${staging.job}/.prepared" />
+                      </resourceexists>
+                      <then>
+                        <!-- Do nothing. -->
+                      </then>
+                      <else>
+                        <!-- <echoproperties /> -->
+                        <!-- <mkdir dir="${staging.version}" /> -->
+                        <exec executable="git" outputproperty="staging.git" resultproperty="staging.git.error"
+                          failonerror="false" dir="${basedir}">
+                          <arg value="rev-parse" />
+                          <arg value="--is-inside-work-tree" />
+                        </exec>
+                        <echo message="==============  ${staging.git}" />
+                        <echo message=" ======= staging.git.error = ${staging.git.error}" />
+                        <!-- If in Git working tree, find the repository path -->
+                        <if>
+                          <equals arg1="${staging.git.error}" arg2="0" />
+                          <then>
+                            <!-- We are under Git repo or working tree -->
+                            <if>
+                              <equals arg1="${staging.git}" arg2="true" />
+                              <then>
+                                <echo message=" ======= In Git working tree" />
+                                <!-- We are under Git working tree -->
+                                <exec executable="bash" dir="${basedir}" outputproperty="staging.git.dir">
+                                  <arg value="-c" />
+                                  <arg value="readlink -e $(git rev-parse --git-dir)" />
+                                </exec>
+                                <echo message=" ======= staging.git.dir = ${staging.git.dir}" />
+                                <!-- Make sure we have a local site branch -->
+                                <!-- This searches for a site branch, it is used later to create/track/checkout -->
+                                <exec executable="git" dir="${basedir}" outputproperty="staging.tmp.branchref"
+                                  resultproperty="staging.tmp.branchref.code" failonerror="false">
+                                  <arg value="show-ref" />
+                                  <arg value="${staging.git.branch.dev}" />
+                                </exec>
+
+                                <!-- Make sure we have a local branch we can use -->
+                                <if>
+                                  <equals arg1="${staging.tmp.branchref.code}" arg2="0" />
+                                  <then>
+                                    <echo message=" ======= Git repository has reference with ${staging.git.branch.dev}" />
+                                    <echo message=" ======= Git references are: \n ${staging.tmp.branchref}" />
+                                    <!-- We have some branch. Is it local or remote? -->
+                                    <if>
+                                      <contains string="${staging.tmp.branchref}" substring="heads" />
+                                      <then>
+                                        <echo
+                                          message=" ======= Git repository has _heads_ reference with ${staging.git.branch.dev}" />
+                                        <!-- Local, nothing to do -->
+                                      </then>
+                                      <else>
+                                        <echo
+                                          message=" ======= Git repository has _remote_ reference with ${staging.git.branch.dev}" />
+                                        <!-- Remote, create local tracking -->
+                                        <exec executable="git" dir="${basedir}">
+                                          <arg value="branch" />
+                                          <arg value="${staging.git.branch.dev}" />
+                                          <arg value="refs/remotes/origin/${staging.git.branch.dev}" />
+                                        </exec>
+                                      </else>
+                                    </if>
+                                  </then>
+                                  <else>
+                                    <!-- We need a new branch, but it has to be orphaned, will delay this. -->
+                                    <echo message=" ======= Git repository needs orphaned branch." />
+                                    <property name="staging.tmp.neworphan" value="true" />
+                                  </else>
+                                </if>
+                                <!-- Now we need to clone and checkout -->
+                                <!-- Need to be on the staging.git.branch.dev branch -->
+                                <if>
+                                  <isset property="staging.tmp.neworphan" />
+                                  <then>
+                                    <echo message=" ======= Git cloning with no checkout, and an orphan branch" />
+                                    <exec executable="git" dir="${basedir}">
+                                      <arg value="clone" />
+                                      <arg value="--shared" />
+                                      <arg value="--no-checkout" />
+                                      <arg value="${staging.git.dir}" />
+                                      <arg value="${staging.job}" />
+                                    </exec>
+                                    <exec executable="git" dir="${staging.job}">
+                                      <arg value="checkout" />
+                                      <arg value="--orphan" />
+                                      <arg value="${staging.git.branch.dev}" />
+                                    </exec>
+                                  </then>
+                                  <else>
+                                    <echo message=" ======= Git cloning and checking our existing branch" />
+                                    <exec executable="git" dir="${basedir}">
+                                      <arg value="clone" />
+                                      <arg value="--branch" />
+                                      <arg value="${staging.git.branch.dev}" />
+                                      <arg value="--shared" />
+                                      <arg value="${staging.git.dir}" />
+                                      <arg value="${staging.job}" />
+                                    </exec>
+                                  </else>
+                                </if>
+
+                                <!-- Need to clean the directories -->
+                                <delete defaultexcludes="no" includeemptydirs="true">
+                                  <fileset dir="${staging.job}" defaultexcludes="no">
+                                    <exclude name=".git/" />
+                                    <exclude name="version/" />
+                                  </fileset>
+                                </delete>
+                                <delete dir="${staging.version}" defaultexcludes="no" includeemptydirs="true">
+
+                                </delete>
+
+                                <!-- Clean Git history, need to commit first -->
+                                <touch file="${staging.job}/.prepared" />
+                                <exec executable="git" dir="${staging.job}">
+                                  <arg value="add" />
+                                  <arg value="-A" />
+                                  <arg value=":/" />
+                                </exec>
+                                <exec executable="git" dir="${staging.job}">
+                                  <arg value="commit" />
+                                  <arg value="-m" />
+                                  <arg value="Cleaned staging area." />
+                                </exec>
+                                <!-- git log - -pretty=format:"%H" - - diff-filter=A - - .keep -->
+                                <!-- :TODO -->
+                                <!-- <exec executable="git" dir="${staging.job}"> -->
+                                <!-- <arg value="- -pretty=format:%H" /> -->
+                                <!-- <arg value="- -diff-filter=A" /> -->
+                                <!-- <arg value="version/${project.version}" /> -->
+                                <!-- </exec> -->
+
+                              </then>
+                              <else>
+                                <!-- We are under the .git directory -->
+                                <!-- Should not happen -->
+                              </else>
+                            </if>
+
+                            <!-- End of we are under Git control -->
+                          </then>
+                          <else>
+                            <!-- Not under Git control -->
+                          </else>
+                        </if>
+                      </else>
+                    </if>
+                  </target>
+                </configuration>
+              </execution>
+              <execution>
+                <id>post-site.git.commit</id>
+                <phase>post-site</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+                    <exec executable="git" dir="${staging.job}">
+                      <arg value="add" />
+                      <arg value="-A" />
+                      <arg value=":/" />
+                    </exec>
+                    <exec executable="git" dir="${staging.job}">
+                      <arg value="commit" />
+                      <arg value="--amend" />
+                      <arg value="-m" />
+                      <arg value="Committed staging area." />
+                    </exec>
+                    <exec executable="git" dir="${staging.job}">
+                      <arg value="push" />
+                      <arg value="origin" />
+                      <arg value="+${staging.git.branch.dev}:${staging.git.branch.dev}" />
+                    </exec>
+                  </target>
+                </configuration>
+              </execution>
+              <execution>
+                <id>site-deploy.publish</id>
+                <phase>site-deploy</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+                    <exec executable="git" dir="${basedir}">
+                      <arg value="branch" />
+                      <arg value="-D" />
+                      <arg value="${staging.git.branch}" />
+                    </exec>
+                    <exec executable="git" dir="${basedir}">
+                      <arg value="branch" />
+                      <arg value="${staging.git.branch}" />
+                      <arg value="${staging.git.branch.dev}" />
+                    </exec>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+            <configuration>
+              <exportAntProperties>true</exportAntProperties>
+            </configuration>
+          </plugin>
+          <plugin>
             <artifactId>maven-site-plugin</artifactId>
             <executions>
               <execution>
@@ -834,52 +1098,8 @@
                   <goal>stage</goal>
                 </goals>
                 <configuration>
-                  <stagingDirectory>${top.stage.directory}</stagingDirectory>
-                  <topSiteURL>file://${top.stage.directory}/</topSiteURL>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-        </plugins>
-      </build>
-    </profile>
-
-
-    <profile>
-      <id>custom.post-site.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/post-site.phase</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>custom.post-site.goal</id>
-                <phase>post-site</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <!-- Clear previous site -->
-                    <delete includeemptydirs="true">
-                      <fileset dir="${stage.staging}/../staging/../" includes="**/*" excludes="**/staging/**" />
-                    </delete>
-                    <!-- Move new site -->
-                    <move todir="${stage.staging}/..">
-                      <fileset dir="${stage.staging}/../staging" includes="**/*" />
-                    </move>
-                    <delete dir="${stage.staging}/../staging" includeemptydirs="true" />
-                    <filter token="PROJECT_VERSION" value="${project.version}" />
-                    <copy file="${basedir}/src/site/index.html" todir="${stage.staging}/../staging/../../../"
-                      filtering="true" />
-                  </target>
-
+                  <stagingDirectory>${staging.version}</stagingDirectory>
+                  <topSiteURL>file://${staging.version}/</topSiteURL>
                 </configuration>
               </execution>
             </executions>
@@ -887,7 +1107,6 @@
         </plugins>
       </build>
     </profile>
-
 
     <profile>
       <id>main.preporting.profile</id>
@@ -981,7 +1200,7 @@
               <artifactId>maven-site-plugin</artifactId>
               <version>${site.plugin.version}</version>
               <configuration>
-                <!-- <skipDeploy>true</skipDeploy> -->
+                <skipDeploy>true</skipDeploy>
               </configuration>
               <dependencies>
                 <dependency>
@@ -1013,8 +1232,27 @@
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-antrun-plugin</artifactId>
               <version>${antrun.plugin.version}</version>
+
               <configuration>
               </configuration>
+              <dependencies>
+                <dependency>
+                  <groupId>ant-contrib</groupId>
+                  <artifactId>ant-contrib</artifactId>
+                  <version>${ant-contrib.plugin.version}</version>
+                  <exclusions>
+                    <exclusion>
+                      <groupId>ant</groupId>
+                      <artifactId>ant</artifactId>
+                    </exclusion>
+                  </exclusions>
+                </dependency>
+                <dependency>
+                  <groupId>ant</groupId>
+                  <artifactId>ant</artifactId>
+                  <version>${ant.version}</version>
+                </dependency>
+              </dependencies>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
