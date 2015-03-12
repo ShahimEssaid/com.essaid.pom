@@ -10,25 +10,25 @@
   <!-- <name>Override</name> -->
   <!-- </bannerRight> -->
 
-<!--   <publishDate position="bottom" format="yyyy-MM-dd" /> -->
-<!--   <version position="bottom" /> -->
+  <!-- <publishDate position="bottom" format="yyyy-MM-dd" /> -->
+  <!-- <version position="bottom" /> -->
 
-<!--   <custom> -->
-<!--     <reflowSkin> -->
-<!--       <theme>bootswatch-simplex</theme> -->
-<!--       <topNav>Home|Documentation|Tools|Contribute</topNav> -->
-<!--       <bottomNav maxSpan="9"> -->
-<!--         <column>Main|Tools</column> -->
-<!--         <column>Download|Contribute</column> -->
-<!--         <column>Documentation</column> -->
-<!--         <column>Generated Reports</column> -->
-<!--       </bottomNav> -->
+  <!-- <custom> -->
+  <!-- <reflowSkin> -->
+  <!-- <theme>bootswatch-simplex</theme> -->
+  <!-- <topNav>Home|Documentation|Tools|Contribute</topNav> -->
+  <!-- <bottomNav maxSpan="9"> -->
+  <!-- <column>Main|Tools</column> -->
+  <!-- <column>Download|Contribute</column> -->
+  <!-- <column>Documentation</column> -->
+  <!-- <column>Generated Reports</column> -->
+  <!-- </bottomNav> -->
 
-<!--       <toc>top</toc> -->
-<!--       <tocTopMax>6</tocTopMax> -->
+  <!-- <toc>top</toc> -->
+  <!-- <tocTopMax>6</tocTopMax> -->
 
-<!--     </reflowSkin> -->
-<!--   </custom> -->
+  <!-- </reflowSkin> -->
+  <!-- </custom> -->
 
   <!-- <body> -->
 
@@ -39,11 +39,29 @@
 
   <!-- </body> -->
 
-<!--   <skin> -->
-<!--     <groupId>lt.velykis.maven.skins</groupId> -->
-<!--     <artifactId>reflow-maven-skin</artifactId> -->
-<!--     <version>1.1.1</version> -->
-<!--   </skin> -->
+  <!-- <skin> -->
+  <!-- <groupId>lt.velykis.maven.skins</groupId> -->
+  <!-- <artifactId>reflow-maven-skin</artifactId> -->
+  <!-- <version>1.1.1</version> -->
+  <!-- </skin> -->
+
+  <body>
+    <menu ref="parent" />
+
+    <menu name="Overview">
+      <item name="Introduction" href="./index.html" />
+      <item name="Sample Page" href="./sample.html" />
+      <item name="Press" href="./press.html" />
+      <item name="Powered By" href="./poweredby.html" />
+    </menu>
+
+    <menu name="Layouts">
+      <item name="Sidebar" href="./sidebar/index.html" />
+      <item name="Topbar" href="./topbar/index.html" />
+      <item name="Topbar (inverse)" href="./topbar-inverse/index.html" />
+    </menu>
+    <menu ref="reports" inherit="bottom" />
+  </body>
   <skin>
     <groupId>org.apache.maven.skins</groupId>
     <artifactId>maven-fluido-skin</artifactId>
