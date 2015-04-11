@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.essaid.maven</groupId>
 	<artifactId>essaid-top-pom</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.3.0</version>
 	<packaging>pom</packaging>
 	<name>com.essaid Maven Parent POM</name>
 	<description>Parent Maven POM for com.essaid  (sub)groups</description>
@@ -27,7 +26,8 @@
 		<!-- <url>https://github.com/ShahimEssaid/com.essaid.poms</url> -->
 		<!-- <connection>scm:git:git@github.com:ShahimEssaid/com.essaid.poms.git</connection> -->
 		<developerConnection>scm:git:ssh://git.essaid.com/ShahimEssaid/maven.poms.git</developerConnection>
-	</scm>
+	  <tag>essaid-top-pom-0.3.0</tag>
+  </scm>
 
 	<developers>
 		<developer>
@@ -308,9 +308,9 @@
 			<properties>
 
 				<!-- Tycho target artifact -->
-				<tycho.target.groupid></tycho.target.groupid>
-				<tycho.target.artifactid></tycho.target.artifactid>
-				<tycho.target.version></tycho.target.version>
+				<tycho.target.groupid />
+				<tycho.target.artifactid />
+				<tycho.target.version />
 
 			</properties>
 			<build>
@@ -963,8 +963,7 @@
 								</goals>
 								<configuration>
 									<target>
-										<taskdef resource="net/sf/antcontrib/antlib.xml"
-											classpathref="maven.plugin.classpath" />
+										<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 										<if>
 											<resourceexists>
 												<file file="${staging.job}/.prepared" />
@@ -975,12 +974,11 @@
 											<else>
 												<!-- <echoproperties /> -->
 												<!-- <mkdir dir="${staging.version}" /> -->
-												<exec executable="git" outputproperty="staging.git"
-													resultproperty="staging.git.error" failonerror="false" dir="${basedir}">
+												<exec executable="git" outputproperty="staging.git" resultproperty="staging.git.error" failonerror="false" dir="${basedir}">
 													<arg value="rev-parse" />
 													<arg value="--is-inside-work-tree" />
 												</exec>
-												<echo message="==============  ${staging.git}" />
+												<echo message="============== ${staging.git}" />
 												<echo message=" ======= staging.git.error = ${staging.git.error}" />
 												<!-- If in Git working tree, find the repository path -->
 												<if>
@@ -992,8 +990,7 @@
 															<then>
 																<echo message=" ======= In Git working tree" />
 																<!-- We are under Git working tree -->
-																<exec executable="bash" dir="${basedir}"
-																	outputproperty="staging.git.dir">
+																<exec executable="bash" dir="${basedir}" outputproperty="staging.git.dir">
 																	<arg value="-c" />
 																	<arg value="readlink -e $(git rev-parse --git-dir)" />
 																</exec>
@@ -1001,40 +998,31 @@
 																<!-- Make sure we have a local site branch -->
 																<!-- This searches for a site branch, it is used later to 
 																	create/track/checkout -->
-																<exec executable="git" dir="${basedir}"
-																	outputproperty="staging.tmp.branchref" resultproperty="staging.tmp.branchref.code"
-																	failonerror="false">
+																<exec executable="git" dir="${basedir}" outputproperty="staging.tmp.branchref" resultproperty="staging.tmp.branchref.code" failonerror="false">
 																	<arg value="show-ref" />
 																	<arg value="${staging.git.branch.dev}" />
 																</exec>
 
 																<!-- Make sure we have a local branch we can use -->
 																<if>
-																	<equals arg1="${staging.tmp.branchref.code}"
-																		arg2="0" />
+																	<equals arg1="${staging.tmp.branchref.code}" arg2="0" />
 																	<then>
-																		<echo
-																			message=" ======= Git repository has reference with ${staging.git.branch.dev}" />
-																		<echo
-																			message=" ======= Git references are: \n ${staging.tmp.branchref}" />
+																		<echo message=" ======= Git repository has reference with ${staging.git.branch.dev}" />
+																		<echo message=" ======= Git references are: \n ${staging.tmp.branchref}" />
 																		<!-- We have some branch. Is it local or remote? -->
 																		<if>
-																			<contains string="${staging.tmp.branchref}"
-																				substring="heads" />
+																			<contains string="${staging.tmp.branchref}" substring="heads" />
 																			<then>
-																				<echo
-																					message=" ======= Git repository has _heads_ reference with ${staging.git.branch.dev}" />
+																				<echo message=" ======= Git repository has _heads_ reference with ${staging.git.branch.dev}" />
 																				<!-- Local, nothing to do -->
 																			</then>
 																			<else>
-																				<echo
-																					message=" ======= Git repository has _remote_ reference with ${staging.git.branch.dev}" />
+																				<echo message=" ======= Git repository has _remote_ reference with ${staging.git.branch.dev}" />
 																				<!-- Remote, create local tracking -->
 																				<exec executable="git" dir="${basedir}">
 																					<arg value="branch" />
 																					<arg value="${staging.git.branch.dev}" />
-																					<arg
-																						value="refs/remotes/origin/${staging.git.branch.dev}" />
+																					<arg value="refs/remotes/origin/${staging.git.branch.dev}" />
 																				</exec>
 																			</else>
 																		</if>
@@ -1051,8 +1039,7 @@
 																<if>
 																	<isset property="staging.tmp.neworphan" />
 																	<then>
-																		<echo
-																			message=" ======= Git cloning with no checkout, and an orphan branch" />
+																		<echo message=" ======= Git cloning with no checkout, and an orphan branch" />
 																		<exec executable="git" dir="${basedir}">
 																			<arg value="clone" />
 																			<arg value="--shared" />
@@ -1067,8 +1054,7 @@
 																		</exec>
 																	</then>
 																	<else>
-																		<echo
-																			message=" ======= Git cloning and checking our existing branch" />
+																		<echo message=" ======= Git cloning and checking our existing branch" />
 																		<exec executable="git" dir="${basedir}">
 																			<arg value="clone" />
 																			<arg value="--branch" />
@@ -1087,8 +1073,7 @@
 																		<exclude name="version/" />
 																	</fileset>
 																</delete>
-																<delete dir="${staging.version}" defaultexcludes="no"
-																	includeemptydirs="true">
+																<delete dir="${staging.version}" defaultexcludes="no" includeemptydirs="true">
 
 																</delete>
 
@@ -1139,8 +1124,7 @@
 								</goals>
 								<configuration>
 									<target>
-										<taskdef resource="net/sf/antcontrib/antlib.xml"
-											classpathref="maven.plugin.classpath" />
+										<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 										<exec executable="git" dir="${staging.job}">
 											<arg value="add" />
 											<arg value="-A" />
@@ -1178,8 +1162,7 @@
 								</goals>
 								<configuration>
 									<target>
-										<taskdef resource="net/sf/antcontrib/antlib.xml"
-											classpathref="maven.plugin.classpath" />
+										<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 										<exec executable="git" dir="${basedir}">
 											<arg value="branch" />
 											<arg value="-D" />
@@ -1454,7 +1437,7 @@
 												</goals>
 											</pluginExecutionFilter>
 											<action>
-												<ignore></ignore>
+												<ignore />
 											</action>
 										</pluginExecution>
 										<pluginExecution>
@@ -1468,7 +1451,7 @@
 												</goals>
 											</pluginExecutionFilter>
 											<action>
-												<ignore></ignore>
+												<ignore />
 											</action>
 										</pluginExecution>
 										<pluginExecution>
@@ -1482,7 +1465,7 @@
 												</goals>
 											</pluginExecutionFilter>
 											<action>
-												<ignore></ignore>
+												<ignore />
 											</action>
 										</pluginExecution>
 										<pluginExecution>
@@ -1495,7 +1478,7 @@
 												</goals>
 											</pluginExecutionFilter>
 											<action>
-												<ignore></ignore>
+												<ignore />
 											</action>
 										</pluginExecution>
 									</pluginExecutions>
