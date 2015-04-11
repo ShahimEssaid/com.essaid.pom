@@ -532,14 +532,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-release-plugin</artifactId>
-						<version>${maven.release.plugin.version}</version>
-						<dependencies>
-							<dependency>
-								<groupId>org.apache.maven.scm</groupId>
-								<artifactId>maven-scm-provider-gitexe</artifactId>
-								<version>1.9.4</version>
-							</dependency>
-						</dependencies>
 					</plugin>
 				</plugins>
 			</build>
@@ -1273,6 +1265,18 @@
 			<build>
 				<pluginManagement>
 					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-release-plugin</artifactId>
+							<version>${maven.release.plugin.version}</version>
+							<dependencies>
+								<dependency>
+									<groupId>org.apache.maven.scm</groupId>
+									<artifactId>maven-scm-provider-gitexe</artifactId>
+									<version>1.9.4</version>
+								</dependency>
+							</dependencies>
+						</plugin>
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-clean-plugin</artifactId>
