@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.essaid.pom</groupId>
 	<artifactId>essaid-top</artifactId>
-	<version>0.1.0</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>com.essaid Maven Parent POM</name>
 	<description>Parent Maven POM for com.essaid  (sub)groups</description>
@@ -26,7 +26,7 @@
 		<!-- <url>https://github.com/ShahimEssaid/com.essaid.poms</url> -->
 		<!-- <connection>scm:git:git@github.com:ShahimEssaid/com.essaid.poms.git</connection> -->
 		<developerConnection>scm:git:ssh://git.essaid.com/ShahimEssaid/com.essaid.pom.git</developerConnection>
-		<tag>essaid-top-0.1.0</tag>
+		<tag>essaid-top-pom-0.4.0</tag>
 	</scm>
 
 	<developers>
