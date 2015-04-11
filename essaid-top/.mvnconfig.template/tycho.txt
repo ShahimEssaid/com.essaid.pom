@@ -1,7 +1,7 @@
 
 Details below, but these are the two main issues:
 1. Configure POM dependencies. See the <plubin> fragment below.
-2. Configure the local resolution of Tycho built artifacts. Tycho does automatic local resolution even if the artifacts are not explicitly configured. COULD BE A VERY BAD THING! This should be disabled by default in settings.xml
+2. Configure the local resolution of Tycho built artifacts. Tycho does automatic local resolution even if the artifacts are not explicitly configured. COULD BE A VERY BAD THING! This should be disabled by default in settings.xml  (tycho.localArtifacts=ignore may also be configured in the settings.xml)
 
 ===============
 
