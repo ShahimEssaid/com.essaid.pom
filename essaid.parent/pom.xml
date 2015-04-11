@@ -1,1383 +1,1493 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.essaid.maven</groupId>
-  <artifactId>essaid-top-pom</artifactId>
-  <version>0.0.1</version>
-  <packaging>pom</packaging>
-  <name>com.essaid Maven Parent POM</name>
-  <description>Parent Maven POM for com.essaid  (sub)groups</description>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.essaid.maven</groupId>
+	<artifactId>essaid-top-pom</artifactId>
+	<version>0.3.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>com.essaid Maven Parent POM</name>
+	<description>Parent Maven POM for com.essaid  (sub)groups</description>
 
-  <url>file:///${staging.version}/${project.artifactId}/</url>
-  <distributionManagement>
-    <site>
-      <id>projectsite</id>
-      <url>file:///${staging.version}/${project.artifactId}/</url>
-    </site>
-  </distributionManagement>
+	<url>file:///${staging.version}/${project.artifactId}/</url>
+	<distributionManagement>
+		<site>
+			<id>projectsite</id>
+			<url>file:///${staging.version}/${project.artifactId}/</url>
+		</site>
+	</distributionManagement>
 
-  <licenses>
-    <license>
-      <name>Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-    </license>
-  </licenses>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
-  <scm>
-    <url>https://github.com/ShahimEssaid/com.essaid.poms</url>
-    <connection>scm:git:git@github.com:ShahimEssaid/com.essaid.poms.git</connection>
-    <developerConnection>scm:git:git@github.com:ShahimEssaid/com.essaid.poms.git</developerConnection>
-  </scm>
+	<scm>
+		<url>https://github.com/ShahimEssaid/com.essaid.poms</url>
+		<connection>scm:git:git@github.com:ShahimEssaid/com.essaid.poms.git</connection>
+		<developerConnection>scm:git:git@github.com:ShahimEssaid/com.essaid.poms.git</developerConnection>
+	</scm>
 
-  <developers>
-    <developer>
-      <name>Shahim Essaid</name>
-    </developer>
-  </developers>
+	<developers>
+		<developer>
+			<name>Shahim Essaid</name>
+		</developer>
+	</developers>
 
-  <prerequisites>
-    <maven>${maven.version}</maven>
-  </prerequisites>
+	<prerequisites>
+		<maven>${maven.version}</maven>
+	</prerequisites>
 
-  <properties>
-    <maven.build.timestamp.format>yyyy-MM-dd'_'HH.mm.ss'_UTC'</maven.build.timestamp.format>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <github.global.server>github</github.global.server>
-    <github.repository.name>maven.poms</github.repository.name>
+	<properties>
+		<maven.build.timestamp.format>yyyy-MM-dd'_'HH.mm.ss'_UTC'</maven.build.timestamp.format>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<github.global.server>github</github.global.server>
+		<github.repository.name>maven.poms</github.repository.name>
 
-    <!-- Versioning properties -->
-    <maven.version>3.2.5</maven.version>
-    <tycho.version>0.20.0</tycho.version>
-    <scala.version>2.11.0</scala.version>
-    <xtext.version>2.6.0</xtext.version>
-    <xtend.version>${xtext.version}</xtend.version>
-    <xbase.version>${xtext.version}</xbase.version>
+		<!-- Versioning properties -->
+		<maven.version>3.2.5</maven.version>
+		<tycho.version>0.20.0</tycho.version>
+		<scala.version>2.11.0</scala.version>
+		<xtext.version>2.6.0</xtext.version>
+		<xtend.version>${xtext.version}</xtend.version>
+		<xbase.version>${xtext.version}</xbase.version>
+		<target.java.version>1.8</target.java.version>
+		<source.java.version>1.8</source.java.version>
 
-    <!-- XText workflow file -->
-    <xtext.lang>replace/me/with/MyLanguage</xtext.lang>
-    <xtext.workflow>${xtext.lang}.mwe2</xtext.workflow>
+		<!-- XText workflow file -->
+		<xtext.lang>replace/me/with/MyLanguage</xtext.lang>
+		<xtext.workflow>${xtext.lang}.mwe2</xtext.workflow>
 
-    <!-- Tycho target artifact -->
-    <tycho.target.groupid></tycho.target.groupid>
-    <tycho.target.artifactid></tycho.target.artifactid>
-    <tycho.target.version></tycho.target.version>
+		<!-- plugin versions -->
+		<ant.version>1.7.0</ant.version>
+		<antrun.plugin.version>1.8</antrun.plugin.version>
+		<ant-contrib.plugin.version>1.0b3</ant-contrib.plugin.version>
+		<clean.plugin.version>2.5</clean.plugin.version>
+		<compiler.plugin.version>3.2</compiler.plugin.version>
+		<install.plugin.version>2.5.1</install.plugin.version>
+		<deploy.plugin.version>2.8.2</deploy.plugin.version>
+		<exec.plugin.version>1.3</exec.plugin.version>
+		<gpg.plugin.version>1.5</gpg.plugin.version>
+		<github.site.plugin.version>0.8</github.site.plugin.version>
+		<maven-jar-plugin.version>2.5</maven-jar-plugin.version>
+		<javadoc.plugin.version>2.9.1</javadoc.plugin.version>
+		<maven.plugin-plugin.version>3.3</maven.plugin-plugin.version>
+		<maven.plugin-tools.version>3.3</maven.plugin-tools.version>
+		<maven.plugin-testing.version>3.1.0</maven.plugin-testing.version>
+		<plexus.metadata.version>1.5.5</plexus.metadata.version>
+		<projectinfo.reports.plugin.version>2.7</projectinfo.reports.plugin.version>
+		<resources.plugin.version>2.6</resources.plugin.version>
+		<sisu.plugin.version>0.2.0</sisu.plugin.version>
+		<site.plugin.version>3.4</site.plugin.version>
+		<surefire.plugin.version>2.17</surefire.plugin.version>
+		<source.plugin.version>2.2.1</source.plugin.version>
+		<scala.plugin.version>3.1.6</scala.plugin.version>
+		<scalatest.plugin.version>1.0-RC2</scalatest.plugin.version>
 
-    <!-- plugin versions -->
-    <ant.version>1.7.0</ant.version>
-    <antrun.plugin.version>1.8</antrun.plugin.version>
-    <ant-contrib.plugin.version>1.0b3</ant-contrib.plugin.version>
-    <clean.plugin.version>2.5</clean.plugin.version>
-    <compiler.plugin.version>3.1</compiler.plugin.version>
-    <install.plugin.version>2.5.1</install.plugin.version>
-    <deploy.plugin.version>2.8.1</deploy.plugin.version>
-    <exec.plugin.version>1.3</exec.plugin.version>
-    <gpg.plugin.version>1.5</gpg.plugin.version>
-    <github.site.plugin.version>0.8</github.site.plugin.version>
-    <maven-jar-plugin.version>2.5</maven-jar-plugin.version>
-    <javadoc.plugin.version>2.9.1</javadoc.plugin.version>
-    <maven.plugin-plugin.version>3.3</maven.plugin-plugin.version>
-    <maven.plugin-tools.version>3.3</maven.plugin-tools.version>
-    <maven.plugin-testing.version>3.1.0</maven.plugin-testing.version>
-    <plexus.metadata.version>1.5.5</plexus.metadata.version>
-    <projectinfo.reports.plugin.version>2.7</projectinfo.reports.plugin.version>
-    <resources.plugin.version>2.6</resources.plugin.version>
-    <sisu.plugin.version>0.2.0</sisu.plugin.version>
-    <site.plugin.version>3.4</site.plugin.version>
-    <surefire.plugin.version>2.17</surefire.plugin.version>
-    <source.plugin.version>2.2.1</source.plugin.version>
-    <scala.plugin.version>3.1.6</scala.plugin.version>
-    <scalatest.plugin.version>1.0-RC2</scalatest.plugin.version>
-    <tycho.plugin.version>${tycho.version}</tycho.plugin.version>
+		<jgit.dirtyWorkingTree>error</jgit.dirtyWorkingTree>
+		<tycho.plugin.version>${tycho.version}</tycho.plugin.version>
 
-    <!-- To help with site generation and staging -->
-    <staging.root>${user.home}/.m2/staging-root</staging.root>
-    <staging.name>staging-job</staging.name>
-    <staging.git.branch>gh-pages</staging.git.branch>
-    <staging.git.branch.dev>gh-pages-dev</staging.git.branch.dev>
-    <staging.cleanup>true</staging.cleanup>
-    <staging.job>${staging.root}/${staging.name}/${maven.build.timestamp}</staging.job>
-    <staging.version>${staging.job}/version/${project.version}</staging.version>
+		<!-- To help with site generation and staging -->
+		<staging.root>${user.home}/.m2/staging-root</staging.root>
+		<staging.name>staging-job</staging.name>
+		<staging.git.branch>gh-pages</staging.git.branch>
+		<staging.git.branch.dev>gh-pages-dev</staging.git.branch.dev>
+		<staging.cleanup>true</staging.cleanup>
+		<staging.job>${staging.root}/${staging.name}/${maven.build.timestamp}</staging.job>
+		<staging.version>${staging.job}/version/${project.version}</staging.version>
 
-  </properties>
+	</properties>
 
-  <build>
-    <plugins>
-
-
-      <plugin>
-        <inherited>false</inherited>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.3</version>
-        <executions>
-          <execution>
-            <id>zip.template</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>${basedir}/.mvnconfig.assembly.xml</descriptor>
-              </descriptors>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <inherited>false</inherited>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.7</version>
-        <executions>
-          <execution>
-            <id>attach.template</id>
-            <phase>package</phase>
-            <goals>
-              <goal>attach-artifact</goal>
-            </goals>
-            <configuration>
-              <artifacts>
-                <artifact>
-                  <file>${project.build.directory}/${project.artifactId}-${project.version}-template.zip</file>
-                </artifact>
-              </artifacts>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+	<build>
+		<plugins>
 
 
-      <!-- <plugin> -->
-      <!-- <inherited>false</inherited> -->
-      <!-- <groupId>org.apache.maven.plugins</groupId> -->
-      <!-- <artifactId>maven-jar-plugin</artifactId> -->
-      <!-- <executions> -->
-      <!-- <execution> -->
-      <!-- <id>jar.template</id> -->
-      <!-- <goals> -->
-      <!-- <goal>jar</goal> -->
-      <!-- </goals> -->
-      <!-- <phase>package</phase> -->
-      <!-- <configuration> -->
-      <!-- <classesDirectory>${basedir}</classesDirectory> -->
-      <!-- <includes> -->
-      <!-- <include>.mvnconfig.template</include> -->
-      <!-- </includes> -->
-      <!-- <finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName> -->
-      <!-- < -->
-      <!-- </configuration> -->
-      <!-- </execution> -->
-      <!-- </executions> -->
-      <!-- </plugin> -->
+			<plugin>
+				<inherited>false</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.3</version>
+				<executions>
+					<execution>
+						<id>zip.template</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>${basedir}/.mvnconfig.assembly.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<inherited>false</inherited>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>attach.template</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}-template.zip</file>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<!-- <plugin> -->
+			<!-- <inherited>false</inherited> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-jar-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>jar.template</id> -->
+			<!-- <goals> -->
+			<!-- <goal>jar</goal> -->
+			<!-- </goals> -->
+			<!-- <phase>package</phase> -->
+			<!-- <configuration> -->
+			<!-- <classesDirectory>${basedir}</classesDirectory> -->
+			<!-- <includes> -->
+			<!-- <include>.mvnconfig.template</include> -->
+			<!-- </includes> -->
+			<!-- <finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName> -->
+			<!-- < -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 
 
 
-      <plugin>
-        <inherited>false</inherited>
-        <artifactId>maven-site-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attache.site.descriptor</id>
-            <goals>
-              <goal>attach-descriptor</goal>
-            </goals>
-            <inherited>false</inherited>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+			<plugin>
+				<inherited>false</inherited>
+				<artifactId>maven-site-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attache.site.descriptor</id>
+						<goals>
+							<goal>attach-descriptor</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 
-  <profiles>
+	<profiles>
 
-    <profile>
-      <id>essaid.public.distribution.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/essaid.public.distribution</exists>
-        </file>
-      </activation>
-      <distributionManagement>
-        <repository>
-          <id>essaid.nexus</id>
-          <url>https://nexus.essaid.com/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-          <id>essaid.nexus</id>
-          <url>https://nexus.essaid.com/content/repositories/snapshots</url>
-        </snapshotRepository>
-      </distributionManagement>
-    </profile>
+		<profile>
+			<id>essaid.public.distribution.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/essaid.public.distribution</exists>
+				</file>
+			</activation>
+			<properties>
+				<essaid.releases>https://nexus.essaid.com/content/repositories/releases</essaid.releases>
+				<essaid.snapshots>https://nexus.essaid.com/content/repositories/snapshots</essaid.snapshots>
+			</properties>
+			<distributionManagement>
+				<repository>
+					<id>essaid.nexus</id>
+					<url>${essaid.releases}</url>
+				</repository>
+				<snapshotRepository>
+					<id>essaid.nexus</id>
+					<url>${essaid.snapshots}</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
 
-    <profile>
-      <id>essaid.private.distribution.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/essaid.private.distribution</exists>
-        </file>
-      </activation>
-      <distributionManagement>
-        <repository>
-          <id>essaid.nexus</id>
-          <url>https://nexus.essaid.com/content/repositories/releases-private</url>
-        </repository>
-        <snapshotRepository>
-          <id>essaid.nexus</id>
-          <url>https://nexus.essaid.com/content/repositories/snapshots-private</url>
-        </snapshotRepository>
-      </distributionManagement>
-    </profile>
+		<profile>
+			<id>essaid.private.distribution.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/essaid.private.distribution</exists>
+				</file>
+			</activation>
+			<properties>
+				<essaid.releases>https://nexus.essaid.com/content/repositories/releases-private</essaid.releases>
+				<essaid.snapshots>https://nexus.essaid.com/content/repositories/snapshots-private</essaid.snapshots>
+			</properties>
+			<distributionManagement>
+				<repository>
+					<id>essaid.nexus</id>
+					<url>${essaid.releases}</url>
+				</repository>
+				<snapshotRepository>
+					<id>essaid.nexus</id>
+					<url>${essaid.snapshots}</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
 
-    <profile>
-      <id>sonatype.distribution.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/sonatype.distribution</exists>
-        </file>
-      </activation>
-      <distributionManagement>
-        <repository>
-          <id>sonatype.staging.repository</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-        </repository>
-        <snapshotRepository>
-          <id>sonatype.snapshot.repository</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-      </distributionManagement>
-    </profile>
+		<profile>
+			<id>sonatype.distribution.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/sonatype.distribution</exists>
+				</file>
+			</activation>
+			<distributionManagement>
+				<repository>
+					<id>sonatype.staging.repository</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+				</repository>
+				<snapshotRepository>
+					<id>sonatype.snapshot.repository</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
 
-    <profile>
-      <id>gpg.sign</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/gpg.sign</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>tycho.build.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/tycho</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-maven-plugin</artifactId>
-            <extensions>true</extensions>
-            <configuration>
-
-            </configuration>
-          </plugin>
-          <!-- <plugin> -->
-          <!-- <groupId>org.eclipse.tycho</groupId> -->
-          <!-- <artifactId>target-platform-configuration</artifactId> -->
-          <!-- <configuration> -->
-          <!-- <target> -->
-          <!-- <artifact> -->
-          <!-- <groupId>${tycho.target.groupid}</groupId> -->
-          <!-- <artifactId>${tycho.target.artifactid}</artifactId> -->
-          <!-- <version>${tycho.target.version}</version> -->
-          <!-- </artifact> -->
-          <!-- </target> -->
-          <!-- <environments> -->
-          <!-- <environment> -->
-          <!-- <os>win32</os> -->
-          <!-- <ws>win32</ws> -->
-          <!-- <arch>x86</arch> -->
-          <!-- </environment> -->
-          <!-- <environment> -->
-          <!-- <os>win32</os> -->
-          <!-- <ws>win32</ws> -->
-          <!-- <arch>x86_64</arch> -->
-          <!-- </environment> -->
-          <!-- <environment> -->
-          <!-- <os>linux</os> -->
-          <!-- <ws>gtk</ws> -->
-          <!-- <arch>x86_64</arch> -->
-          <!-- </environment> -->
-          <!-- <environment> -->
-          <!-- <os>macosx</os> -->
-          <!-- <ws>cocoa</ws> -->
-          <!-- <arch>x86_64</arch> -->
-          <!-- </environment> -->
-          <!-- </environments> -->
-          <!-- </configuration> -->
-          <!-- </plugin> -->
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>maven.build.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/maven</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-plugin-plugin</artifactId>
-            <configuration>
-              <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-            </configuration>
-            <executions>
-              <execution>
-                <id>mojo.goals</id>
-                <goals>
-                  <goal>descriptor</goal>
-                  <goal>helpmojo</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>mojo.report</id>
-                <phase>site</phase>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.eclipse.sisu</groupId>
-            <artifactId>sisu-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sisu.index</id>
-                <goals>
-                  <goal>main-index</goal>
-                  <goal>test-index</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.maven</groupId>
-          <artifactId>maven-core</artifactId>
-          <version>${maven.version}</version>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.maven</groupId>
-          <artifactId>maven-compat</artifactId>
-          <version>${maven.version}</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.maven.plugin-tools</groupId>
-          <artifactId>maven-plugin-annotations</artifactId>
-          <version>${maven.plugin-tools.version}</version>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.maven.plugin-testing</groupId>
-          <artifactId>maven-plugin-testing-tools</artifactId>
-          <version>${maven.plugin-testing.version}</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.maven.plugin-testing</groupId>
-          <artifactId>maven-plugin-testing-harness</artifactId>
-          <version>${maven.plugin-testing.version}</version>
-          <scope>test</scope>
-        </dependency>
-
-        <!-- <dependency> -->
-        <!-- <groupId>org.codehaus.plexus</groupId> -->
-        <!-- <artifactId>plexus-utils</artifactId> -->
-        <!-- <version>3.0.17</version> -->
-        <!-- </dependency> -->
-      </dependencies>
-    </profile>
-
-    <profile>
-      <id>maven.plexus.build.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/maven.plexus</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-component-metadata</artifactId>
-            <version>${plexus.metadata.version}</version>
-            <executions>
-              <execution>
-                <id>plexus.metadata</id>
-                <goals>
-                  <goal>generate-metadata</goal>
-                  <goal>generate-test-metadata</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>scala.build.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/scala</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>net.alchim31.maven</groupId>
-            <artifactId>scala-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>scala.compiler.first</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>add-source</goal>
-                  <goal>compile</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>scala-test-compile</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>testCompile</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>compile</phase>
-                <goals>
-                  <goal>compile</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-      <dependencies>
-        <dependency>
-          <groupId>org.scala-lang</groupId>
-          <artifactId>scala-library</artifactId>
-          <version>${scala.version}</version>
-        </dependency>
-      </dependencies>
-    </profile>
-
-    <profile>
-      <id>scalatest.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/scalatest</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <!-- http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin -->
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest-maven-plugin</artifactId>
-            <configuration>
-              <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-              <junitxml>.</junitxml>
-              <filereports>WDF TestSuite.txt</filereports>
-            </configuration>
-            <executions>
-              <execution>
-                <id>test</id>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <configuration>
-                  <!-- http://doc.scalatest.org/2.1.5/index.html#org.scalatest.tools.Runner$@configuringReporters -->
-                  <!-- http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin -->
-                  <stdout>WSI</stdout>
-                  <!-- <stderr>WSI</stderr> -->
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <configuration>
-                <skipTests>true</skipTests>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-      <dependencies>
-        <dependency>
-          <groupId>org.scalatest</groupId>
-          <artifactId>scalatest_2.11</artifactId>
-          <version>2.1.6</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-
-    <profile>
-      <id>xtend.build.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/xtend</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.xtend</groupId>
-            <artifactId>xtend-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>xtend.compile</id>
-                <goals>
-                  <goal>compile</goal>
-                  <goal>xtend-install-debug-info</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
-                </configuration>
-              </execution>
-              <execution>
-                <id>xtend.compile.test</id>
-                <goals>
-                  <goal>testCompile</goal>
-                  <goal>xtend-test-install-debug-info</goal>
-                </goals>
-                <configuration>
-                  <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-      <dependencies>
-        <dependency>
-          <groupId>org.eclipse.xtend</groupId>
-          <artifactId>org.eclipse.xtend.lib</artifactId>
-          <version>${xtend.version}</version>
-        </dependency>
-      </dependencies>
-    </profile>
-
-    <profile>
-      <id>xtext.build.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/xtext</exists>
-        </file>
-      </activation>
-      <build>
-
-        <pluginManagement>
-          <plugins>
-            <!-- xtend-maven-plugin is in pluginManagement instead of in plugins so that it doesn't run before the exec-maven-plugin's 
-              *.mwe2 gen; this way we can list it after. -->
-
-            <plugin>
-              <groupId>org.eclipse.xtend</groupId>
-              <artifactId>xtend-maven-plugin</artifactId>
-              <version>${xtext.version}</version>
-              <executions>
-                <execution>
-                  <goals>
-                    <goal>compile</goal>
-                    <goal>xtend-install-debug-info</goal>
-                    <goal>testCompile</goal>
-                    <goal>xtend-test-install-debug-info</goal>
-                  </goals>
-                </execution>
-              </executions>
-              <configuration>
-                <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
-                <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
-              </configuration>
-              <dependencies>
-                <dependency>
-                  <groupId>org.eclipse.xtend</groupId>
-                  <artifactId>org.eclipse.xtend.lib</artifactId>
-                  <version>${xtend.version}</version>
-                </dependency>
-              </dependencies>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-        <plugins>
+		<profile>
+			<id>gpg.sign</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/gpg.sign</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
 
-          <!-- custom cleaning -->
-          <plugin>
-            <artifactId>maven-clean-plugin</artifactId>
-            <configuration>
-              <filesets>
-                <fileset>
-                  <directory>${basedir}/xtext-gen</directory>
-                  <includes>
-                    <include>*.java</include>
-                  </includes>
-                </fileset>
-                <!-- clean ui plugin as well -->
-                <fileset>
-                  <directory>${basedir}/../${project.artifactId}.ui/xtext-gen</directory>
-                  <includes>
-                    <include>*.java</include>
-                  </includes>
-                </fileset>
-                <!-- clean test fragment as well -->
-                <fileset>
-                  <directory>${basedir}/../${project.artifactId}.tests/xtext-gen</directory>
-                  <includes>
-                    <include>*.java</include>
-                  </includes>
-                </fileset>
+		<profile>
+			<id>dirty.git</id>
+			<activation>
+				<property>
+					<name>dirty.git</name>
+				</property>
+			</activation>
+			<properties>
+				<jgit.dirtyWorkingTree>warning</jgit.dirtyWorkingTree>
+			</properties>
+		</profile>
 
-              </filesets>
-            </configuration>
-          </plugin>
+		<profile>
+			<id>tycho.build.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/tycho</exists>
+				</file>
+			</activation>
 
-          <!-- run the workflow engine -->
-          <!-- see http://www.eclipse.org/Xtext/documentation.html#continuousIntegration -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>xtext.generate</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>java</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <includeProjectDependencies>false</includeProjectDependencies>
-              <includePluginDependencies>true</includePluginDependencies>
-              <mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
-              <arguments>
-                <argument>file://${project.basedir}/${xtext.workflow}</argument>
-                <argument>
-                  -p
-                </argument>
-                <argument>
-                  runtimeProject=/${project.basedir}
-                </argument>
-              </arguments>
-            </configuration>
-            <dependencies>
-              <dependency>
-                <groupId>org.eclipse.xtext</groupId>
-                <artifactId>org.eclipse.xtext.xtext</artifactId>
-                <version>${xtext.version}</version>
-              </dependency>
-              <dependency>
-                <groupId>org.eclipse.xtext</groupId>
-                <artifactId>org.eclipse.xtext.xbase</artifactId>
-                <version>${xbase.version}</version>
-              </dependency>
-              <dependency>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-plugin-plugin</artifactId>
-                <version>3.2</version>
-                <exclusions>
-                  <exclusion>
-                    <groupId>asm</groupId>
-                    <artifactId>*</artifactId>
-                  </exclusion>
-                </exclusions>
-              </dependency>
-            </dependencies>
+			<properties>
 
-          </plugin>
+				<!-- Tycho target artifact -->
+				<tycho.target.groupid></tycho.target.groupid>
+				<tycho.target.artifactid></tycho.target.artifactid>
+				<tycho.target.version></tycho.target.version>
 
-          <!-- xtend has to run after the above -->
-          <plugin>
-            <groupId>org.eclipse.xtend</groupId>
-            <artifactId>xtend-maven-plugin</artifactId>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-maven-plugin</artifactId>
+						<extensions>true</extensions>
+						<configuration>
 
-    <profile>
-      <id>srcdoc.build.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/source.doc</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <!-- Javadoc artifact -->
-          <plugin>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>javadoc.build</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-                <configuration>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<configuration>
+							<target>
+								<artifact>
+									<groupId>${tycho.target.groupid}</groupId>
+									<artifactId>${tycho.target.artifactid}</artifactId>
+									<version>${tycho.target.version}</version>
+								</artifact>
+							</target>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+						</configuration>
+					</plugin>
+				</plugins>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.eclipse.tycho</groupId>
+							<artifactId>tycho-maven-plugin</artifactId>
+							<extensions>true</extensions>
+							<version>${tycho.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>org.eclipse.tycho</groupId>
+							<artifactId>target-platform-configuration</artifactId>
+							<version>${tycho.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>org.eclipse.tycho</groupId>
+							<artifactId>tycho-p2-repository-plugin</artifactId>
+							<version>${tycho.version}</version>
+							<configuration>
+								<!-- <includeAllDependencies>true</includeAllDependencies> -->
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.eclipse.tycho</groupId>
+							<artifactId>tycho-packaging-plugin</artifactId>
+							<version>${tycho.version}</version>
+							<dependencies>
+								<dependency>
+									<groupId>org.eclipse.tycho.extras</groupId>
+									<artifactId>tycho-buildtimestamp-jgit</artifactId>
+									<version>${tycho.version}</version>
+								</dependency>
+							</dependencies>
+							<configuration>
+								<timestampProvider>jgit</timestampProvider>
+								<jgit.ignore>
+									pom.xml
+								</jgit.ignore>
+								<jgit.dirtyWorkingTree>${jgit.dirtyWorkingTree}</jgit.dirtyWorkingTree>
 
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.eclipse.tycho</groupId>
+							<artifactId>tycho-p2-plugin</artifactId>
+							<version>${tycho.version}</version>
+							<configuration>
+								<baselineRepositories>
+									<repository>
+										<id>essaid.nexus</id>
+										<url>${essaid.releases}</url>
+									</repository>
+									<repository>
+										<id>essaid.nexus</id>
+										<url>${essaid.snapshots}</url>
+									</repository>
+								</baselineRepositories>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
 
-          <!-- Source artifact -->
-          <plugin>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
+		<profile>
+			<id>maven.build.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/maven</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-plugin-plugin</artifactId>
+						<configuration>
+							<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+						</configuration>
+						<executions>
+							<execution>
+								<id>mojo.goals</id>
+								<goals>
+									<goal>descriptor</goal>
+									<goal>helpmojo</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>mojo.report</id>
+								<phase>site</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.sisu</groupId>
+						<artifactId>sisu-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sisu.index</id>
+								<goals>
+									<goal>main-index</goal>
+									<goal>test-index</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-core</artifactId>
+					<version>${maven.version}</version>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-compat</artifactId>
+					<version>${maven.version}</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.maven.plugin-tools</groupId>
+					<artifactId>maven-plugin-annotations</artifactId>
+					<version>${maven.plugin-tools.version}</version>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.maven.plugin-testing</groupId>
+					<artifactId>maven-plugin-testing-tools</artifactId>
+					<version>${maven.plugin-testing.version}</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.maven.plugin-testing</groupId>
+					<artifactId>maven-plugin-testing-harness</artifactId>
+					<version>${maven.plugin-testing.version}</version>
+					<scope>test</scope>
+				</dependency>
 
-    <profile>
-      <id>skip.install.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/skip.install</exists>
-        </file>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <artifactId>maven-install-plugin</artifactId>
-              <configuration>
-                <skip>true</skip>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
+				<!-- <dependency> -->
+				<!-- <groupId>org.codehaus.plexus</groupId> -->
+				<!-- <artifactId>plexus-utils</artifactId> -->
+				<!-- <version>3.0.17</version> -->
+				<!-- </dependency> -->
+			</dependencies>
+		</profile>
 
-    <profile>
-      <id>skip.deploy.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/skip.deploy</exists>
-        </file>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <artifactId>maven-deploy-plugin</artifactId>
-              <configuration>
-                <skip>true</skip>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
+		<profile>
+			<id>maven.plexus.build.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/maven.plexus</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-component-metadata</artifactId>
+						<version>${plexus.metadata.version}</version>
+						<executions>
+							<execution>
+								<id>plexus.metadata</id>
+								<goals>
+									<goal>generate-metadata</goal>
+									<goal>generate-test-metadata</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
-    <profile>
-      <id>custom.site.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/site.phase</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>pre-site.gitcheck</id>
-                <phase>pre-site</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-                    <if>
-                      <resourceexists>
-                        <file file="${staging.job}/.prepared" />
-                      </resourceexists>
-                      <then>
-                        <!-- Do nothing. -->
-                      </then>
-                      <else>
-                        <!-- <echoproperties /> -->
-                        <!-- <mkdir dir="${staging.version}" /> -->
-                        <exec executable="git" outputproperty="staging.git" resultproperty="staging.git.error"
-                          failonerror="false" dir="${basedir}">
-                          <arg value="rev-parse" />
-                          <arg value="--is-inside-work-tree" />
-                        </exec>
-                        <echo message="==============  ${staging.git}" />
-                        <echo message=" ======= staging.git.error = ${staging.git.error}" />
-                        <!-- If in Git working tree, find the repository path -->
-                        <if>
-                          <equals arg1="${staging.git.error}" arg2="0" />
-                          <then>
-                            <!-- We are under Git repo or working tree -->
-                            <if>
-                              <equals arg1="${staging.git}" arg2="true" />
-                              <then>
-                                <echo message=" ======= In Git working tree" />
-                                <!-- We are under Git working tree -->
-                                <exec executable="bash" dir="${basedir}" outputproperty="staging.git.dir">
-                                  <arg value="-c" />
-                                  <arg value="readlink -e $(git rev-parse --git-dir)" />
-                                </exec>
-                                <echo message=" ======= staging.git.dir = ${staging.git.dir}" />
-                                <!-- Make sure we have a local site branch -->
-                                <!-- This searches for a site branch, it is used later to create/track/checkout -->
-                                <exec executable="git" dir="${basedir}" outputproperty="staging.tmp.branchref"
-                                  resultproperty="staging.tmp.branchref.code" failonerror="false">
-                                  <arg value="show-ref" />
-                                  <arg value="${staging.git.branch.dev}" />
-                                </exec>
+		<profile>
+			<id>scala.build.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/scala</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>net.alchim31.maven</groupId>
+						<artifactId>scala-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>scala.compiler.first</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>add-source</goal>
+									<goal>compile</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>scala-test-compile</id>
+								<phase>process-test-resources</phase>
+								<goals>
+									<goal>testCompile</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<goals>
+									<goal>compile</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>org.scala-lang</groupId>
+					<artifactId>scala-library</artifactId>
+					<version>${scala.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
 
-                                <!-- Make sure we have a local branch we can use -->
-                                <if>
-                                  <equals arg1="${staging.tmp.branchref.code}" arg2="0" />
-                                  <then>
-                                    <echo message=" ======= Git repository has reference with ${staging.git.branch.dev}" />
-                                    <echo message=" ======= Git references are: \n ${staging.tmp.branchref}" />
-                                    <!-- We have some branch. Is it local or remote? -->
-                                    <if>
-                                      <contains string="${staging.tmp.branchref}" substring="heads" />
-                                      <then>
-                                        <echo
-                                          message=" ======= Git repository has _heads_ reference with ${staging.git.branch.dev}" />
-                                        <!-- Local, nothing to do -->
-                                      </then>
-                                      <else>
-                                        <echo
-                                          message=" ======= Git repository has _remote_ reference with ${staging.git.branch.dev}" />
-                                        <!-- Remote, create local tracking -->
-                                        <exec executable="git" dir="${basedir}">
-                                          <arg value="branch" />
-                                          <arg value="${staging.git.branch.dev}" />
-                                          <arg value="refs/remotes/origin/${staging.git.branch.dev}" />
-                                        </exec>
-                                      </else>
-                                    </if>
-                                  </then>
-                                  <else>
-                                    <!-- We need a new branch, but it has to be orphaned, will delay this. -->
-                                    <echo message=" ======= Git repository needs orphaned branch." />
-                                    <property name="staging.tmp.neworphan" value="true" />
-                                  </else>
-                                </if>
-                                <!-- Now we need to clone and checkout -->
-                                <!-- Need to be on the staging.git.branch.dev branch -->
-                                <if>
-                                  <isset property="staging.tmp.neworphan" />
-                                  <then>
-                                    <echo message=" ======= Git cloning with no checkout, and an orphan branch" />
-                                    <exec executable="git" dir="${basedir}">
-                                      <arg value="clone" />
-                                      <arg value="--shared" />
-                                      <arg value="--no-checkout" />
-                                      <arg value="${staging.git.dir}" />
-                                      <arg value="${staging.job}" />
-                                    </exec>
-                                    <exec executable="git" dir="${staging.job}">
-                                      <arg value="checkout" />
-                                      <arg value="--orphan" />
-                                      <arg value="${staging.git.branch.dev}" />
-                                    </exec>
-                                  </then>
-                                  <else>
-                                    <echo message=" ======= Git cloning and checking our existing branch" />
-                                    <exec executable="git" dir="${basedir}">
-                                      <arg value="clone" />
-                                      <arg value="--branch" />
-                                      <arg value="${staging.git.branch.dev}" />
-                                      <arg value="--shared" />
-                                      <arg value="${staging.git.dir}" />
-                                      <arg value="${staging.job}" />
-                                    </exec>
-                                  </else>
-                                </if>
+		<profile>
+			<id>scalatest.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/scalatest</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin -->
+						<groupId>org.scalatest</groupId>
+						<artifactId>scalatest-maven-plugin</artifactId>
+						<configuration>
+							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+							<junitxml>.</junitxml>
+							<filereports>WDF TestSuite.txt</filereports>
+						</configuration>
+						<executions>
+							<execution>
+								<id>test</id>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<!-- http://doc.scalatest.org/2.1.5/index.html#org.scalatest.tools.Runner$@configuringReporters -->
+									<!-- http://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin -->
+									<stdout>WSI</stdout>
+									<!-- <stderr>WSI</stderr> -->
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<configuration>
+								<skipTests>true</skipTests>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>org.scalatest</groupId>
+					<artifactId>scalatest_2.11</artifactId>
+					<version>2.1.6</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
 
-                                <!-- Need to clean the directories -->
-                                <delete defaultexcludes="no" includeemptydirs="true">
-                                  <fileset dir="${staging.job}" defaultexcludes="no">
-                                    <exclude name=".git/" />
-                                    <exclude name="version/" />
-                                  </fileset>
-                                </delete>
-                                <delete dir="${staging.version}" defaultexcludes="no" includeemptydirs="true">
+		<profile>
+			<id>xtend.build.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/xtend</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.xtend</groupId>
+						<artifactId>xtend-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>xtend.compile</id>
+								<goals>
+									<goal>compile</goal>
+									<goal>xtend-install-debug-info</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
+								</configuration>
+							</execution>
+							<execution>
+								<id>xtend.compile.test</id>
+								<goals>
+									<goal>testCompile</goal>
+									<goal>xtend-test-install-debug-info</goal>
+								</goals>
+								<configuration>
+									<testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.xtend</groupId>
+					<artifactId>org.eclipse.xtend.lib</artifactId>
+					<version>${xtend.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
 
-                                </delete>
+		<profile>
+			<id>xtext.build.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/xtext</exists>
+				</file>
+			</activation>
+			<build>
 
-                                <!-- Clean Git history, need to commit first -->
-                                <touch file="${staging.job}/.prepared" />
-                                <exec executable="git" dir="${staging.job}">
-                                  <arg value="add" />
-                                  <arg value="-A" />
-                                  <arg value=":/" />
-                                </exec>
-                                <exec executable="git" dir="${staging.job}">
-                                  <arg value="commit" />
-                                  <arg value="-m" />
-                                  <arg value="Cleaned staging area." />
-                                </exec>
-                                <!-- git log - -pretty=format:"%H" - - diff-filter=A - - .keep -->
-                                <!-- :TODO -->
-                                <!-- <exec executable="git" dir="${staging.job}"> -->
-                                <!-- <arg value="- -pretty=format:%H" /> -->
-                                <!-- <arg value="- -diff-filter=A" /> -->
-                                <!-- <arg value="version/${project.version}" /> -->
-                                <!-- </exec> -->
+				<pluginManagement>
+					<plugins>
+						<!-- xtend-maven-plugin is in pluginManagement instead of in plugins 
+							so that it doesn't run before the exec-maven-plugin's *.mwe2 gen; this way 
+							we can list it after. -->
 
-                              </then>
-                              <else>
-                                <!-- We are under the .git directory -->
-                                <!-- Should not happen -->
-                              </else>
-                            </if>
-
-                            <!-- End of we are under Git control -->
-                          </then>
-                          <else>
-                            <!-- Not under Git control -->
-                          </else>
-                        </if>
-                      </else>
-                    </if>
-                  </target>
-                </configuration>
-              </execution>
-              <execution>
-                <id>post-site.git.commit</id>
-                <phase>post-site</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-                    <exec executable="git" dir="${staging.job}">
-                      <arg value="add" />
-                      <arg value="-A" />
-                      <arg value=":/" />
-                    </exec>
-                    <exec executable="git" dir="${staging.job}">
-                      <arg value="commit" />
-                      <arg value="--amend" />
-                      <arg value="-m" />
-                      <arg value="Committed staging area." />
-                    </exec>
-                    <exec executable="git" dir="${staging.job}">
-                      <arg value="push" />
-                      <arg value="origin" />
-                      <arg value="+${staging.git.branch.dev}:${staging.git.branch.dev}" />
-                    </exec>
-                    <exec executable="git" dir="${basedir}">
-                      <arg value="branch" />
-                      <arg value="-D" />
-                      <arg value="${staging.git.branch}" />
-                    </exec>
-                    <exec executable="git" dir="${basedir}">
-                      <arg value="branch" />
-                      <arg value="${staging.git.branch}" />
-                      <arg value="${staging.git.branch.dev}" />
-                    </exec>
-                  </target>
-                </configuration>
-              </execution>
-              <execution>
-                <id>site-deploy.publish</id>
-                <phase>site-deploy</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-                    <exec executable="git" dir="${basedir}">
-                      <arg value="branch" />
-                      <arg value="-D" />
-                      <arg value="${staging.git.branch}" />
-                    </exec>
-                    <exec executable="git" dir="${basedir}">
-                      <arg value="branch" />
-                      <arg value="${staging.git.branch}" />
-                      <arg value="${staging.git.branch.dev}" />
-                    </exec>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-            <configuration>
-              <exportAntProperties>true</exportAntProperties>
-            </configuration>
-          </plugin>
-          <plugin>
-            <inherited>true</inherited>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-stage</id>
-                <phase>site</phase>
-                <goals>
-                  <goal>stage</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <stagingDirectory>${staging.version}</stagingDirectory>
-              <topSiteURL>file://${staging.version}/</topSiteURL>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>main.preporting.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/reporting</exists>
-        </file>
-      </activation>
-      <reporting>
-        <excludeDefaults>true</excludeDefaults>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.9</version>
-            <reportSets>
-              <reportSet><!-- by default, id = "default" -->
-                <reports><!-- select non-aggregate reports -->
-                  <report>javadoc</report>
-                  <report>test-javadoc</report>
-                </reports>
-              </reportSet>
-              <reportSet><!-- aggregate reportSet, to define in poms having modules -->
-                <id>aggregate</id>
-                <inherited>false</inherited><!-- don't run aggregate in child modules -->
-                <reports>
-                  <report>aggregate</report>
-                </reports>
-              </reportSet>
-            </reportSets>
-          </plugin>
-        </plugins>
-      </reporting>
-    </profile>
+						<plugin>
+							<groupId>org.eclipse.xtend</groupId>
+							<artifactId>xtend-maven-plugin</artifactId>
+							<version>${xtext.version}</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>compile</goal>
+										<goal>xtend-install-debug-info</goal>
+										<goal>testCompile</goal>
+										<goal>xtend-test-install-debug-info</goal>
+									</goals>
+								</execution>
+							</executions>
+							<configuration>
+								<outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
+								<testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
+							</configuration>
+							<dependencies>
+								<dependency>
+									<groupId>org.eclipse.xtend</groupId>
+									<artifactId>org.eclipse.xtend.lib</artifactId>
+									<version>${xtend.version}</version>
+								</dependency>
+							</dependencies>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+				<plugins>
 
 
-    <profile>
-      <id>plugin.management.profile</id>
-      <activation>
-        <file>
-          <exists>${basedir}/.mvnconfig/plugin.management</exists>
-        </file>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-clean-plugin</artifactId>
-              <version>${clean.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <version>${compiler.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-deploy-plugin</artifactId>
-              <version>${deploy.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-install-plugin</artifactId>
-              <version>${install.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-jar-plugin</artifactId>
-              <version>${maven-jar-plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-resources-plugin</artifactId>
-              <version>${resources.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-site-plugin</artifactId>
-              <version>${site.plugin.version}</version>
-              <configuration>
-                <skipDeploy>true</skipDeploy>
-              </configuration>
-              <dependencies>
-                <dependency>
-                  <groupId>org.apache.maven.doxia</groupId>
-                  <artifactId>doxia-module-twiki</artifactId>
-                  <version>1.6</version>
-                </dependency>
-                <!-- <dependency> -->
-                <!-- <groupId>lt.velykis.maven.skins</groupId> -->
-                <!-- <artifactId>reflow-velocity-tools</artifactId> -->
-                <!-- <version>1.1.1</version> -->
-                <!-- </dependency> -->
-                <!-- Reflow skin requires Velocity >= 1.7 -->
-                <dependency>
-                  <groupId>org.apache.maven.skins</groupId>
-                  <artifactId>maven-fluido-skin</artifactId>
-                  <version>1.3.1</version>
-                </dependency>
-                <!-- <dependency> -->
-                <!-- <groupId>org.apache.velocity</groupId> -->
-                <!-- <artifactId>velocity</artifactId> -->
-                <!-- <version>1.7</version> -->
-                <!-- </dependency> -->
-              </dependencies>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <version>${surefire.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-antrun-plugin</artifactId>
-              <version>${antrun.plugin.version}</version>
+					<!-- custom cleaning -->
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>${basedir}/xtext-gen</directory>
+									<includes>
+										<include>*.java</include>
+									</includes>
+								</fileset>
+								<!-- clean ui plugin as well -->
+								<fileset>
+									<directory>${basedir}/../${project.artifactId}.ui/xtext-gen</directory>
+									<includes>
+										<include>*.java</include>
+									</includes>
+								</fileset>
+								<!-- clean test fragment as well -->
+								<fileset>
+									<directory>${basedir}/../${project.artifactId}.tests/xtext-gen</directory>
+									<includes>
+										<include>*.java</include>
+									</includes>
+								</fileset>
 
-              <configuration>
-              </configuration>
-              <dependencies>
-                <dependency>
-                  <groupId>ant-contrib</groupId>
-                  <artifactId>ant-contrib</artifactId>
-                  <version>${ant-contrib.plugin.version}</version>
-                  <exclusions>
-                    <exclusion>
-                      <groupId>ant</groupId>
-                      <artifactId>ant</artifactId>
-                    </exclusion>
-                  </exclusions>
-                </dependency>
-                <dependency>
-                  <groupId>ant</groupId>
-                  <artifactId>ant</artifactId>
-                  <version>${ant.version}</version>
-                </dependency>
-              </dependencies>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-source-plugin</artifactId>
-              <version>${source.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <version>${javadoc.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-project-info-reports-plugin</artifactId>
-              <version>${projectinfo.reports.plugin.version}</version>
-              <configuration>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-gpg-plugin</artifactId>
-              <version>${gpg.plugin.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>net.alchim31.maven</groupId>
-              <artifactId>scala-maven-plugin</artifactId>
-              <version>${scala.plugin.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.scalatest</groupId>
-              <artifactId>scalatest-maven-plugin</artifactId>
-              <version>${scalatest.plugin.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-plugin-plugin</artifactId>
-              <version>${maven.plugin-plugin.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.eclipse.xtend</groupId>
-              <artifactId>xtend-maven-plugin</artifactId>
-              <version>${xtend.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.eclipse.sisu</groupId>
-              <artifactId>sisu-maven-plugin</artifactId>
-              <version>${sisu.plugin.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>${exec.plugin.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.eclipse.tycho</groupId>
-              <artifactId>tycho-maven-plugin</artifactId>
-              <extensions>true</extensions>
-              <version>${tycho.version}</version>
-            </plugin>
-            <plugin>
-              <groupId>org.eclipse.tycho</groupId>
-              <artifactId>target-platform-configuration</artifactId>
-              <version>${tycho.version}</version>
-            </plugin>
+							</filesets>
+						</configuration>
+					</plugin>
 
-            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven 
-              build itself. -->
-            <plugin>
-              <groupId>org.eclipse.m2e</groupId>
-              <artifactId>lifecycle-mapping</artifactId>
-              <version>1.0.0</version>
-              <configuration>
-                <lifecycleMappingMetadata>
-                  <pluginExecutions>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>net.alchim31.maven</groupId>
-                        <artifactId>scala-maven-plugin</artifactId>
-                        <versionRange>[3.1.6,)</versionRange>
-                        <goals>
-                          <goal>add-source</goal>
-                          <goal>testCompile</goal>
-                          <goal>compile</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore></ignore>
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.eclipse.sisu</groupId>
-                        <artifactId>sisu-maven-plugin</artifactId>
-                        <versionRange>[0.2.0,)</versionRange>
-                        <goals>
-                          <goal>test-index</goal>
-                          <goal>main-index</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore></ignore>
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-component-metadata</artifactId>
-                        <versionRange>[1.5.5,)</versionRange>
-                        <goals>
-                          <goal>generate-metadata</goal>
-                          <goal>generate-test-metadata</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore></ignore>
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <versionRange>[1.3,)</versionRange>
-                        <goals>
-                          <goal>java</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore></ignore>
-                      </action>
-                    </pluginExecution>
-                  </pluginExecutions>
-                </lifecycleMappingMetadata>
-              </configuration>
-            </plugin>
-          </plugins>
+					<!-- run the workflow engine -->
+					<!-- see http://www.eclipse.org/Xtext/documentation.html#continuousIntegration -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>xtext.generate</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>java</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<includeProjectDependencies>false</includeProjectDependencies>
+							<includePluginDependencies>true</includePluginDependencies>
+							<mainClass>org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher</mainClass>
+							<arguments>
+								<argument>file://${project.basedir}/${xtext.workflow}</argument>
+								<argument>
+									-p
+								</argument>
+								<argument>
+									runtimeProject=/${project.basedir}
+								</argument>
+							</arguments>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.eclipse.xtext</groupId>
+								<artifactId>org.eclipse.xtext.xtext</artifactId>
+								<version>${xtext.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>org.eclipse.xtext</groupId>
+								<artifactId>org.eclipse.xtext.xbase</artifactId>
+								<version>${xbase.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-plugin-plugin</artifactId>
+								<version>3.2</version>
+								<exclusions>
+									<exclusion>
+										<groupId>asm</groupId>
+										<artifactId>*</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+						</dependencies>
 
-        </pluginManagement>
-      </build>
-    </profile>
+					</plugin>
 
-  </profiles>
+					<!-- xtend has to run after the above -->
+					<plugin>
+						<groupId>org.eclipse.xtend</groupId>
+						<artifactId>xtend-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>srcdoc.build.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/source.doc</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<!-- Javadoc artifact -->
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>javadoc.build</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- Source artifact -->
+					<plugin>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>skip.install.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/skip.install</exists>
+				</file>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<artifactId>maven-install-plugin</artifactId>
+							<configuration>
+								<skip>true</skip>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+
+		<profile>
+			<id>skip.deploy.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/skip.deploy</exists>
+				</file>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<artifactId>maven-deploy-plugin</artifactId>
+							<configuration>
+								<skip>true</skip>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+
+		<profile>
+			<id>custom.site.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/site.phase</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>pre-site.gitcheck</id>
+								<phase>pre-site</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<taskdef resource="net/sf/antcontrib/antlib.xml"
+											classpathref="maven.plugin.classpath" />
+										<if>
+											<resourceexists>
+												<file file="${staging.job}/.prepared" />
+											</resourceexists>
+											<then>
+												<!-- Do nothing. -->
+											</then>
+											<else>
+												<!-- <echoproperties /> -->
+												<!-- <mkdir dir="${staging.version}" /> -->
+												<exec executable="git" outputproperty="staging.git"
+													resultproperty="staging.git.error" failonerror="false" dir="${basedir}">
+													<arg value="rev-parse" />
+													<arg value="--is-inside-work-tree" />
+												</exec>
+												<echo message="==============  ${staging.git}" />
+												<echo message=" ======= staging.git.error = ${staging.git.error}" />
+												<!-- If in Git working tree, find the repository path -->
+												<if>
+													<equals arg1="${staging.git.error}" arg2="0" />
+													<then>
+														<!-- We are under Git repo or working tree -->
+														<if>
+															<equals arg1="${staging.git}" arg2="true" />
+															<then>
+																<echo message=" ======= In Git working tree" />
+																<!-- We are under Git working tree -->
+																<exec executable="bash" dir="${basedir}"
+																	outputproperty="staging.git.dir">
+																	<arg value="-c" />
+																	<arg value="readlink -e $(git rev-parse --git-dir)" />
+																</exec>
+																<echo message=" ======= staging.git.dir = ${staging.git.dir}" />
+																<!-- Make sure we have a local site branch -->
+																<!-- This searches for a site branch, it is used later to 
+																	create/track/checkout -->
+																<exec executable="git" dir="${basedir}"
+																	outputproperty="staging.tmp.branchref" resultproperty="staging.tmp.branchref.code"
+																	failonerror="false">
+																	<arg value="show-ref" />
+																	<arg value="${staging.git.branch.dev}" />
+																</exec>
+
+																<!-- Make sure we have a local branch we can use -->
+																<if>
+																	<equals arg1="${staging.tmp.branchref.code}"
+																		arg2="0" />
+																	<then>
+																		<echo
+																			message=" ======= Git repository has reference with ${staging.git.branch.dev}" />
+																		<echo
+																			message=" ======= Git references are: \n ${staging.tmp.branchref}" />
+																		<!-- We have some branch. Is it local or remote? -->
+																		<if>
+																			<contains string="${staging.tmp.branchref}"
+																				substring="heads" />
+																			<then>
+																				<echo
+																					message=" ======= Git repository has _heads_ reference with ${staging.git.branch.dev}" />
+																				<!-- Local, nothing to do -->
+																			</then>
+																			<else>
+																				<echo
+																					message=" ======= Git repository has _remote_ reference with ${staging.git.branch.dev}" />
+																				<!-- Remote, create local tracking -->
+																				<exec executable="git" dir="${basedir}">
+																					<arg value="branch" />
+																					<arg value="${staging.git.branch.dev}" />
+																					<arg
+																						value="refs/remotes/origin/${staging.git.branch.dev}" />
+																				</exec>
+																			</else>
+																		</if>
+																	</then>
+																	<else>
+																		<!-- We need a new branch, but it has to be orphaned, will 
+																			delay this. -->
+																		<echo message=" ======= Git repository needs orphaned branch." />
+																		<property name="staging.tmp.neworphan" value="true" />
+																	</else>
+																</if>
+																<!-- Now we need to clone and checkout -->
+																<!-- Need to be on the staging.git.branch.dev branch -->
+																<if>
+																	<isset property="staging.tmp.neworphan" />
+																	<then>
+																		<echo
+																			message=" ======= Git cloning with no checkout, and an orphan branch" />
+																		<exec executable="git" dir="${basedir}">
+																			<arg value="clone" />
+																			<arg value="--shared" />
+																			<arg value="--no-checkout" />
+																			<arg value="${staging.git.dir}" />
+																			<arg value="${staging.job}" />
+																		</exec>
+																		<exec executable="git" dir="${staging.job}">
+																			<arg value="checkout" />
+																			<arg value="--orphan" />
+																			<arg value="${staging.git.branch.dev}" />
+																		</exec>
+																	</then>
+																	<else>
+																		<echo
+																			message=" ======= Git cloning and checking our existing branch" />
+																		<exec executable="git" dir="${basedir}">
+																			<arg value="clone" />
+																			<arg value="--branch" />
+																			<arg value="${staging.git.branch.dev}" />
+																			<arg value="--shared" />
+																			<arg value="${staging.git.dir}" />
+																			<arg value="${staging.job}" />
+																		</exec>
+																	</else>
+																</if>
+
+																<!-- Need to clean the directories -->
+																<delete defaultexcludes="no" includeemptydirs="true">
+																	<fileset dir="${staging.job}" defaultexcludes="no">
+																		<exclude name=".git/" />
+																		<exclude name="version/" />
+																	</fileset>
+																</delete>
+																<delete dir="${staging.version}" defaultexcludes="no"
+																	includeemptydirs="true">
+
+																</delete>
+
+																<!-- Clean Git history, need to commit first -->
+																<touch file="${staging.job}/.prepared" />
+																<exec executable="git" dir="${staging.job}">
+																	<arg value="add" />
+																	<arg value="-A" />
+																	<arg value=":/" />
+																</exec>
+																<exec executable="git" dir="${staging.job}">
+																	<arg value="commit" />
+																	<arg value="-m" />
+																	<arg value="Cleaned staging area." />
+																</exec>
+																<!-- git log - -pretty=format:"%H" - - diff-filter=A - - 
+																	.keep -->
+																<!-- :TODO -->
+																<!-- <exec executable="git" dir="${staging.job}"> -->
+																<!-- <arg value="- -pretty=format:%H" /> -->
+																<!-- <arg value="- -diff-filter=A" /> -->
+																<!-- <arg value="version/${project.version}" /> -->
+																<!-- </exec> -->
+
+															</then>
+															<else>
+																<!-- We are under the .git directory -->
+																<!-- Should not happen -->
+															</else>
+														</if>
+
+														<!-- End of we are under Git control -->
+													</then>
+													<else>
+														<!-- Not under Git control -->
+													</else>
+												</if>
+											</else>
+										</if>
+									</target>
+								</configuration>
+							</execution>
+							<execution>
+								<id>post-site.git.commit</id>
+								<phase>post-site</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<taskdef resource="net/sf/antcontrib/antlib.xml"
+											classpathref="maven.plugin.classpath" />
+										<exec executable="git" dir="${staging.job}">
+											<arg value="add" />
+											<arg value="-A" />
+											<arg value=":/" />
+										</exec>
+										<exec executable="git" dir="${staging.job}">
+											<arg value="commit" />
+											<arg value="--amend" />
+											<arg value="-m" />
+											<arg value="Committed staging area." />
+										</exec>
+										<exec executable="git" dir="${staging.job}">
+											<arg value="push" />
+											<arg value="origin" />
+											<arg value="+${staging.git.branch.dev}:${staging.git.branch.dev}" />
+										</exec>
+										<exec executable="git" dir="${basedir}">
+											<arg value="branch" />
+											<arg value="-D" />
+											<arg value="${staging.git.branch}" />
+										</exec>
+										<exec executable="git" dir="${basedir}">
+											<arg value="branch" />
+											<arg value="${staging.git.branch}" />
+											<arg value="${staging.git.branch.dev}" />
+										</exec>
+									</target>
+								</configuration>
+							</execution>
+							<execution>
+								<id>site-deploy.publish</id>
+								<phase>site-deploy</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<taskdef resource="net/sf/antcontrib/antlib.xml"
+											classpathref="maven.plugin.classpath" />
+										<exec executable="git" dir="${basedir}">
+											<arg value="branch" />
+											<arg value="-D" />
+											<arg value="${staging.git.branch}" />
+										</exec>
+										<exec executable="git" dir="${basedir}">
+											<arg value="branch" />
+											<arg value="${staging.git.branch}" />
+											<arg value="${staging.git.branch.dev}" />
+										</exec>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<exportAntProperties>true</exportAntProperties>
+						</configuration>
+					</plugin>
+					<plugin>
+						<inherited>true</inherited>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-site-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>default-stage</id>
+								<phase>site</phase>
+								<goals>
+									<goal>stage</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<stagingDirectory>${staging.version}</stagingDirectory>
+							<topSiteURL>file://${staging.version}/</topSiteURL>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>main.preporting.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/reporting</exists>
+				</file>
+			</activation>
+			<reporting>
+				<excludeDefaults>true</excludeDefaults>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9</version>
+						<reportSets>
+							<reportSet><!-- by default, id = "default" -->
+								<reports><!-- select non-aggregate reports -->
+									<report>javadoc</report>
+									<report>test-javadoc</report>
+								</reports>
+							</reportSet>
+							<reportSet><!-- aggregate reportSet, to define in poms having modules -->
+								<id>aggregate</id>
+								<inherited>false</inherited><!-- don't run aggregate in child modules -->
+								<reports>
+									<report>aggregate</report>
+								</reports>
+							</reportSet>
+						</reportSets>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+
+
+		<profile>
+			<id>plugin.management.profile</id>
+			<activation>
+				<file>
+					<exists>${basedir}/.mvnconfig/plugin.management</exists>
+				</file>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-clean-plugin</artifactId>
+							<version>${clean.plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>${compiler.plugin.version}</version>
+							<configuration>
+								<source>${source.java.version}</source>
+								<target>${target.java.version}</target>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-deploy-plugin</artifactId>
+							<version>${deploy.plugin.version}</version>
+							<configuration>
+								<!-- Doesn't work with Tycho, and probably the skip install option. -->
+								<!-- <deployAtEnd>true</deployAtEnd> -->
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-install-plugin</artifactId>
+							<version>${install.plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jar-plugin</artifactId>
+							<version>${maven-jar-plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-resources-plugin</artifactId>
+							<version>${resources.plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-site-plugin</artifactId>
+							<version>${site.plugin.version}</version>
+							<configuration>
+								<skipDeploy>true</skipDeploy>
+							</configuration>
+							<dependencies>
+								<dependency>
+									<groupId>org.apache.maven.doxia</groupId>
+									<artifactId>doxia-module-twiki</artifactId>
+									<version>1.6</version>
+								</dependency>
+								<!-- <dependency> -->
+								<!-- <groupId>lt.velykis.maven.skins</groupId> -->
+								<!-- <artifactId>reflow-velocity-tools</artifactId> -->
+								<!-- <version>1.1.1</version> -->
+								<!-- </dependency> -->
+								<!-- Reflow skin requires Velocity >= 1.7 -->
+								<dependency>
+									<groupId>org.apache.maven.skins</groupId>
+									<artifactId>maven-fluido-skin</artifactId>
+									<version>1.3.1</version>
+								</dependency>
+								<!-- <dependency> -->
+								<!-- <groupId>org.apache.velocity</groupId> -->
+								<!-- <artifactId>velocity</artifactId> -->
+								<!-- <version>1.7</version> -->
+								<!-- </dependency> -->
+							</dependencies>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<version>${surefire.plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-antrun-plugin</artifactId>
+							<version>${antrun.plugin.version}</version>
+
+							<configuration>
+							</configuration>
+							<dependencies>
+								<dependency>
+									<groupId>ant-contrib</groupId>
+									<artifactId>ant-contrib</artifactId>
+									<version>${ant-contrib.plugin.version}</version>
+									<exclusions>
+										<exclusion>
+											<groupId>ant</groupId>
+											<artifactId>ant</artifactId>
+										</exclusion>
+									</exclusions>
+								</dependency>
+								<dependency>
+									<groupId>ant</groupId>
+									<artifactId>ant</artifactId>
+									<version>${ant.version}</version>
+								</dependency>
+							</dependencies>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-source-plugin</artifactId>
+							<version>${source.plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>${javadoc.plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-project-info-reports-plugin</artifactId>
+							<version>${projectinfo.reports.plugin.version}</version>
+							<configuration>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-gpg-plugin</artifactId>
+							<version>${gpg.plugin.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>net.alchim31.maven</groupId>
+							<artifactId>scala-maven-plugin</artifactId>
+							<version>${scala.plugin.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>org.scalatest</groupId>
+							<artifactId>scalatest-maven-plugin</artifactId>
+							<version>${scalatest.plugin.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-plugin-plugin</artifactId>
+							<version>${maven.plugin-plugin.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>org.eclipse.xtend</groupId>
+							<artifactId>xtend-maven-plugin</artifactId>
+							<version>${xtend.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>org.eclipse.sisu</groupId>
+							<artifactId>sisu-maven-plugin</artifactId>
+							<version>${sisu.plugin.version}</version>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>exec-maven-plugin</artifactId>
+							<version>${exec.plugin.version}</version>
+						</plugin>
+
+
+						<!--This plugin's configuration is used to store Eclipse m2e settings 
+							only. It has no influence on the Maven build itself. -->
+						<plugin>
+							<groupId>org.eclipse.m2e</groupId>
+							<artifactId>lifecycle-mapping</artifactId>
+							<version>1.0.0</version>
+							<configuration>
+								<lifecycleMappingMetadata>
+									<pluginExecutions>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>net.alchim31.maven</groupId>
+												<artifactId>scala-maven-plugin</artifactId>
+												<versionRange>[3.1.6,)</versionRange>
+												<goals>
+													<goal>add-source</goal>
+													<goal>testCompile</goal>
+													<goal>compile</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore></ignore>
+											</action>
+										</pluginExecution>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.eclipse.sisu</groupId>
+												<artifactId>sisu-maven-plugin</artifactId>
+												<versionRange>[0.2.0,)</versionRange>
+												<goals>
+													<goal>test-index</goal>
+													<goal>main-index</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore></ignore>
+											</action>
+										</pluginExecution>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.codehaus.plexus</groupId>
+												<artifactId>plexus-component-metadata</artifactId>
+												<versionRange>[1.5.5,)</versionRange>
+												<goals>
+													<goal>generate-metadata</goal>
+													<goal>generate-test-metadata</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore></ignore>
+											</action>
+										</pluginExecution>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.codehaus.mojo</groupId>
+												<artifactId>exec-maven-plugin</artifactId>
+												<versionRange>[1.3,)</versionRange>
+												<goals>
+													<goal>java</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore></ignore>
+											</action>
+										</pluginExecution>
+									</pluginExecutions>
+								</lifecycleMappingMetadata>
+							</configuration>
+						</plugin>
+					</plugins>
+
+				</pluginManagement>
+			</build>
+		</profile>
+
+	</profiles>
 </project>
