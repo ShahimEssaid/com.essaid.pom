@@ -1,0 +1,92 @@
+
+Details below, but these are the two main issues:
+1. Configure POM dependencies. See the <plubin> fragment below.
+2. Configure the local resolution of Tycho built artifacts. Tycho does automatic local resolution even if the artifacts are not explicitly configured. COULD BE A VERY BAD THING! This should be disabled by default in settings.xml
+
+===============
+
+See: https://wiki.eclipse.org/Tycho/How_Tos/Dependency_on_pom-first_artifacts
+
+The target configuration is left to the parent pom of individual projects. Add something like this to the parent pom:
+
+<plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <configuration>
+
+              <!-- If pom dependencies should be considered -->
+              <pomDependencies>consider</pomDependencies>
+
+              <target>
+                <!-- one or more artifacts of packaging type: eclipse-target-definition -->
+                <artifact>
+                  <groupId></groupId>
+                  <artifactId></artifactId>
+                  <version></version>
+                </artifact>
+              </target>
+              <environments>
+                <environment>
+                  <os>win32</os>
+                  <ws>win32</ws>
+                  <arch>x86</arch>
+                </environment>
+                <environment>
+                  <os>win32</os>
+                  <ws>win32</ws>
+                  <arch>x86_64</arch>
+                </environment>
+                <environment>
+                  <os>linux</os>
+                  <ws>gtk</ws>
+                  <arch>x86</arch>
+                </environment>
+                <environment>
+                  <os>linux</os>
+                  <ws>gtk</ws>
+                  <arch>x86_64</arch>
+                </environment>
+                <environment>
+                  <os>macosx</os>
+                  <ws>cocoa</ws>
+                  <arch>x86</arch>
+                </environment>
+                <environment>
+                  <os>macosx</os>
+                  <ws>cocoa</ws>
+                  <arch>x86_64</arch>
+                </environment>
+              </environments>
+            </configuration>
+          </plugin>
+
+
+===============
+
+From: https://wiki.eclipse.org/Tycho/Target_Platform
+
+"POM dependencies consider"
+
+OSGi bundles from Maven repositories can be added to the target platform in the following way:
+
+    Specify a dependency to the OSGi bundle artifact in the POM's <dependencies> section.
+    Set the configuration parameter pomDependencies=consider on the target-platform-configuration plugin
+
+This configuration has the following effect:
+
+    First, Maven resolves the GAV dependencies according to the normal Maven rules. This results in a list of artifacts consisting of the specified artifacts and their transitive Maven dependencies.
+    Tycho then checks each of these artifacts, and if the artifact is an OSGi bundle, it is added to the target platform. Other artifacts are ignored. OSGi bundles which become part of the target platform in this way are then available to resolve the project's OSGi dependencies.
+
+For an example, see the POM of this demo project.
+
+Note: Tycho always attempts to resolve transitive dependencies, so if you need a POM dependency in the target platform of one module, you will also need it in all downstream modules. Therefore the POM dependencies (and the pomDependencies=consider configuration) typically need to be added in the parent POM.
+
+Locally built artifacts
+
+Just like in a normal Maven build, a Tycho build can use artifacts that have been built locally and installed (e.g. with mvn clean install) into the local Maven repository. In terms of the target platform, this means that these artifacts are implicitly added to the target platform. This is for example useful if you want to rebuild a part of a Tycho reactor, or if you want to build against a locally built, newer version of an upstream project.
+
+There are the following options to disable this feature:
+
+    Setting the CLI option -Dtycho.localArtifacts=ignore excludes locally built artifacts in one build. (tycho.localArtifacts=ignore may also be configured in the settings.xml; in this case, the default behaviour can be temporarily re-enabled with the CLI option -Dtycho.localArtifacts=default. Since Tycho 0.16.0.)
+    Deleting ~/.m2/repository/.meta/p2-local-metadata.properties resets Tycho's list of locally build artifacts, and therefore these artifacts will not be added to target platforms (unless, of course, the artifacts are installed again).
+ 
