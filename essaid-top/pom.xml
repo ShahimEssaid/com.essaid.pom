@@ -46,7 +46,7 @@
 
 		<!-- Versioning properties -->
 		<maven.version>3.2.5</maven.version>
-		<tycho.version>0.20.0</tycho.version>
+		<tycho.version>0.22.0</tycho.version>
 		<scala.version>2.11.0</scala.version>
 		<xtext.version>2.6.0</xtext.version>
 		<xtend.version>${xtext.version}</xtend.version>
@@ -304,14 +304,14 @@
 				</file>
 			</activation>
 
-			<properties>
+<!-- 			<properties> -->
 
-				<!-- Tycho target artifact -->
-				<tycho.target.groupid />
-				<tycho.target.artifactid />
-				<tycho.target.version />
+<!-- 				Tycho target artifact -->
+<!-- 				<tycho.target.groupid /> -->
+<!-- 				<tycho.target.artifactid /> -->
+<!-- 				<tycho.target.version /> -->
 
-			</properties>
+<!-- 			</properties> -->
 			<build>
 				<plugins>
 					<plugin>
@@ -322,51 +322,51 @@
 
 						</configuration>
 					</plugin>
-					<plugin>
-						<groupId>org.eclipse.tycho</groupId>
-						<artifactId>target-platform-configuration</artifactId>
-						<configuration>
-							<target>
-								<artifact>
-									<groupId>${tycho.target.groupid}</groupId>
-									<artifactId>${tycho.target.artifactid}</artifactId>
-									<version>${tycho.target.version}</version>
-								</artifact>
-							</target>
-							<environments>
-								<environment>
-									<os>win32</os>
-									<ws>win32</ws>
-									<arch>x86</arch>
-								</environment>
-								<environment>
-									<os>win32</os>
-									<ws>win32</ws>
-									<arch>x86_64</arch>
-								</environment>
-								<environment>
-									<os>linux</os>
-									<ws>gtk</ws>
-									<arch>x86</arch>
-								</environment>
-								<environment>
-									<os>linux</os>
-									<ws>gtk</ws>
-									<arch>x86_64</arch>
-								</environment>
-								<environment>
-									<os>macosx</os>
-									<ws>cocoa</ws>
-									<arch>x86</arch>
-								</environment>
-								<environment>
-									<os>macosx</os>
-									<ws>cocoa</ws>
-									<arch>x86_64</arch>
-								</environment>
-							</environments>
-						</configuration>
-					</plugin>
+<!-- 					<plugin> -->
+<!-- 						<groupId>org.eclipse.tycho</groupId> -->
+<!-- 						<artifactId>target-platform-configuration</artifactId> -->
+<!-- 						<configuration> -->
+<!-- 							<target> -->
+<!-- 								<artifact> -->
+<!-- 									<groupId>${tycho.target.groupid}</groupId> -->
+<!-- 									<artifactId>${tycho.target.artifactid}</artifactId> -->
+<!-- 									<version>${tycho.target.version}</version> -->
+<!-- 								</artifact> -->
+<!-- 							</target> -->
+<!-- 							<environments> -->
+<!-- 								<environment> -->
+<!-- 									<os>win32</os> -->
+<!-- 									<ws>win32</ws> -->
+<!-- 									<arch>x86</arch> -->
+<!-- 								</environment> -->
+<!-- 								<environment> -->
+<!-- 									<os>win32</os> -->
+<!-- 									<ws>win32</ws> -->
+<!-- 									<arch>x86_64</arch> -->
+<!-- 								</environment> -->
+<!-- 								<environment> -->
+<!-- 									<os>linux</os> -->
+<!-- 									<ws>gtk</ws> -->
+<!-- 									<arch>x86</arch> -->
+<!-- 								</environment> -->
+<!-- 								<environment> -->
+<!-- 									<os>linux</os> -->
+<!-- 									<ws>gtk</ws> -->
+<!-- 									<arch>x86_64</arch> -->
+<!-- 								</environment> -->
+<!-- 								<environment> -->
+<!-- 									<os>macosx</os> -->
+<!-- 									<ws>cocoa</ws> -->
+<!-- 									<arch>x86</arch> -->
+<!-- 								</environment> -->
+<!-- 								<environment> -->
+<!-- 									<os>macosx</os> -->
+<!-- 									<ws>cocoa</ws> -->
+<!-- 									<arch>x86_64</arch> -->
+<!-- 								</environment> -->
+<!-- 							</environments> -->
+<!-- 						</configuration> -->
+<!-- 					</plugin> -->
 				</plugins>
 				<pluginManagement>
 					<plugins>

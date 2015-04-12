@@ -9,7 +9,7 @@ See: https://wiki.eclipse.org/Tycho/How_Tos/Dependency_on_pom-first_artifacts
 
 The target configuration is left to the parent pom of individual projects. Add something like this to the parent pom:
 
-<plugin>
+		<plugin>
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>target-platform-configuration</artifactId>
             <configuration>
