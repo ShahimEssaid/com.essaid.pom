@@ -988,7 +988,7 @@
   <parent>
   	<groupId>com.essaid.pom</groupId>
   	<artifactId>essaid-top</artifactId>
-  	<version>0.1.0-SNAPSHOT</version>
+  	<version>0.1.0</version>
   	<relativePath>../essaid-top</relativePath>
   </parent>
 </project>

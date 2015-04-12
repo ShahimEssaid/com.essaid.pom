@@ -1,0 +1,3 @@
+#!/bin/sh
+
+mvn -DreResolve=true -Dverbose=true -gs ~/.m2/settings.xml  -s settings-mirror.xml -f $1/pom.xml org.apache.maven.plugins:maven-dependency-plugin:2.10:purge-local-repository
