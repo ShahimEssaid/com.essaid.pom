@@ -16,28 +16,8 @@ jobs:
           gpg-passphrase: MVN_GPG_PASS # env variable for GPG private key passphrase
       - uses: whelk-io/maven-settings-xml-action@v21
         with:
-          repositories: >
-            [
-              { 
-                "id": "oss", 
-                "url": "https://oss.sonatype.org/content/repositories/snapshots/",
-                "snapshots": {
-                                "enabled": "true"
-                            }
-              }
-            ]
-          servers: >
-            [
-              {
-                "id": "oss",
-                "username": "${env.OSS_TOKEN_USER}",
-                "password": "${env.OSS_TOKEN_PASS}"
-              },
-              {
-                "id": "gpg.passphrase",
-                "passphrase": "${env.MVN_GPG_PASS}"
-              }
-            ]
+          repositories: '[{"id": "oss","url":"https://oss.sonatype.org/content/repositories/snapshots/","snapshots":{"enabled":"true"}}]'
+          servers: '[{"id": "oss","username":"${env.OSS_TOKEN_USER}","password":"${env.OSS_TOKEN_PASS}"},{"id":"gpg.passphrase","passphrase": "${env.MVN_GPG_PASS}"}]'
       - run: cat ~/.m2/settings.xml
       - run: ./mvnw -Pdeploy deploy
         env:
