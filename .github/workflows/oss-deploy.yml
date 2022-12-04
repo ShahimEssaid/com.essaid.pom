@@ -9,11 +9,11 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-#          server-id: oss # Value of the distributionManagement/repository/id field of the pom.xml
-#          server-username: OSS_TOKEN_USER # env variable for username in deploy
-#          server-password: OSS_TOKEN_PASS # env variable for token in deploy
-#          gpg-private-key: ${{ secrets.MVN_GPG_KEY }} # Value of the GPG private key to import
-#          gpg-passphrase: MVN_GPG_PASS # env variable for GPG private key passphrase
+          server-id: oss # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: OSS_TOKEN_USER # env variable for username in deploy
+          server-password: OSS_TOKEN_PASS # env variable for token in deploy
+          gpg-private-key: ${{ secrets.MVN_GPG_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: MVN_GPG_PASS # env variable for GPG private key passphrase
       - uses: whelk-io/maven-settings-xml-action@v21
         with:
           repositories: >
