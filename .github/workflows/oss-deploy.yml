@@ -24,6 +24,3 @@ jobs:
           OSS_TOKEN_USER: ${{ secrets.OSS_TOKEN_USER }}
           OSS_TOKEN_PASS: ${{ secrets.OSS_TOKEN_PASS }}
           MVN_GPG_PASS:   ${{ secrets.MVN_GPG_PASS }}
-
-
-
