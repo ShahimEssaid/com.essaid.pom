@@ -1,0 +1,205 @@
+# From https://github.com/ShahimEssaid/examples/blob/92328c1347cdb9b36c2c1936147a1ae7fe556c56/.github/workflows/maven-build-deploy.yaml
+
+# This workflow aims to be an easily reused workflow to enable the build or deployment or a Maven project.
+# You will need to adjust a few of the lines (through the job environment section) but remaining lines are not meant to
+# customized by a user unless really needed. If this becomes needed, customizing remaining lines, I probably need to add
+# additional environment variables or some other sort of indirection.
+
+# You will need to create a few Actions repository secrets:
+#   MVN_BUILD_DISTRIBUTION_RELEASE_REPO_USERNAME: to hold your release distribution repo username.
+#   MVN_BUILD_DISTRIBUTION_RELEASE_REPO_PASSWORD: to hold your release distribution repo password.
+#   MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_USERNAME: to hold your snapshot distribution repo username.
+#   MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_PASSWORD: to hold your snapshot distribution repo password.
+# If you use maven-gpg-plugin: See: https://maven.apache.org/plugins/maven-gpg-plugin/usage.html
+# and: https://unix.stackexchange.com/questions/481939/how-to-export-a-gpg-private-key-and-public-key-to-a-file#482559
+#   MVN_BUILD_GPG_PRIVATE_KEY: your gpg private key
+#   MVN_BUILD_GPG_PRIVATE_KEY_PASSPHRASE: your gpg private key passphrase
+
+
+name: maven-build-deploy.yaml
+run-name: Running maven-build-deploy.yaml
+on:
+  # The following job is only meant for push requests, i.e. trusted code in a branch in this repository.
+  # This workflow can't work for building pull requests since it requires repository secrets.
+  # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+  # See: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+  # If a pull request needs to be deployed, create a branch to track the PR's branch to trigger a deployment.
+  push:         # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushbranchestagsbranches-ignoretags-ignore
+    paths:      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
+      - '.github/workflows/maven-build-deploy.yaml'
+      - 'maven/java-jar/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and optionally deploy
+    runs-on: ubuntu-22.04
+    env:
+
+      JAVA_VERSION: '17'
+      JAVA_DISTRIBUTION: 'temurin'
+
+      # The relative path to the Maven project.
+      MVN_PROJECT_REL_PATH: 'maven/java-jar'
+
+      # Bash regular expression to math against branch names to decide if the branch should be deployed or not.
+      DEPLOY_BRANCHES: '^main$|^master$'
+      NO_DEPLOY_BRANCHES: '^$'
+      # The maven command line without the "mvn" part. If there is a ./mvnw it will be use. Otherwise, defaults to availabe
+      # mvn command in the image.
+      DEPLOY_COMMAND: '--no-transfer-progress deploy'
+
+      # Bash regular expression to match against branch names to decide if the branch should be built.
+      # Build all branches by default
+      BUILD_BRANCHES: '.+'
+      NO_BUILD_BRANCHES: '^$'
+      # The maven command line without the "mvn" part. If there is a ./mvnw it will be use. Otherwise, defaults to availabe
+      # mvn command in the image.
+      BUILD_COMMAND: '--no-transfer-progress verify'
+
+      # We need to qualify the artifact version(s) if we want to deploy distinct artifacts from different branches.
+      # For example, if we want to deploy a PR (so other projects can test it), we need to qualify the Maven version
+      # somehow to not overwrite the main/master deployment. The approach in this workflow is to update the project
+      # version by adding the branch name as an additional qualifier to the version.
+
+      # For example,  0.1.0 becomes 0.1.0-some-branch-name,   0.1.0-SNAPSHOT becomes 0.1.0-some-branch-name-SNAPSHOT
+
+      # Also, to support deploying non -SNAPSHOT versions as a temporary snapshot build to simplify deploying such builds.
+
+      # Which branches to qualify. A branch has to both match the QUALIFY_BRANCHES and NOT match the NO_QUALIFY_BRANCHES
+      # in order for its version to be branch-qualified.
+      QUALIFY_BRANCHES: '^$'  # None by default
+      NO_QUALIFY_BRANCHES: '^main$|^master$'
+
+
+      SNAPSHOT_BRANCHES: '^$' # None by default
+      NO_SNAPSHOT_BRANCHES: '^main$|^master$'
+
+      # The command to set a branch version if needed. "-DnewVersion=${BRANCH_VERSION_NEW}"  will be appended to this value.
+      # The maven command line without the "mvn" part. If there is a ./mvnw it will be use. Otherwise, defaults to availabe
+      # mvn command in the image.
+      MVN_VERSION_SET_COMMAND: '--no-transfer-progress versions:set -DprocessAllModules'
+
+      # The repository ids, from the POM, for distribution so that the settings.xml can be created correctly below.
+      DISTRIBUTION_RELEASE_REPO_ID: 'release-id'
+      DISTRIBUTION_SNAPSHOT_REPO_ID: 'snapshot-id'
+
+      # The default server id for the maven-gpg-plugin to work.
+      # Don't change this unless you know what you are doing.
+      # See: https://maven.apache.org/plugins/maven-gpg-plugin/usage.html
+      GPG_SERVER_ID: 'gpg.passphrase'
+
+      # To output debugging info to the log.
+      DEBUG: true
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.workspace }}/${{ env.MVN_PROJECT_REL_PATH }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@v3 #https://github.com/actions/checkout
+
+      - id: setup-java
+        uses: actions/setup-java@v3  # https://github.com/marketplace/actions/setup-java-jdk
+        with:  # https://github.com/actions/setup-java#user-content-usage
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          gpg-private-key: ${{ secrets.MVN_BUILD_GPG_PRIVATE_KEY }}  # https://unix.stackexchange.com/questions/481939/how-to-export-a-gpg-private-key-and-public-key-to-a-file#482559
+
+      - name: maven-settings-action
+        uses: s4u/maven-settings-action@v2.8.0  # https://github.com/marketplace/actions/maven-settings-action
+        with:
+          servers: |
+            [
+            {"id": "${{ env.DISTRIBUTION_RELEASE_REPO_ID }}", "username": "${env.MVN_BUILD_DISTRIBUTION_RELEASE_REPO_USERNAME}", "password": "${env.MVN_BUILD_DISTRIBUTION_RELEASE_REPO_PASSWORD}"},
+            {"id": "${{ env.DISTRIBUTION_SNAPSHOT_REPO_ID }}", "username": "${env.MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_USERNAME}", "password": "${env.MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_PASSWORD}"},
+            {"id": "${{ env.GPG_SERVER_ID }}", "username": "stub-username-needed-or-error", "passphrase": "${env.MVN_BUILD_GPG_PRIVATE_KEY_PASSPHRASE}"}
+            ]
+      - id: debug-info
+        name: Debugging info
+        if: env.DEBUG == 'true'
+        run: |
+          stdbuf -oL echo "Working dir: $(pwd)"
+          stdbuf -oL  env | sort
+          stdbuf -oL cat "${{ github.workspace }}/.git/config"
+          stdbuf -oL echo "Git default remote branch: $(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
+          stdbuf -oL cat ~/.m2/settings.xml
+          stdbuf -oL echo "github context:"
+          stdbuf -oL echo "${{ toJSON(github) }}"
+      - id: update-version
+        name: Updating version if needed
+        run: |
+          if [[ ${{ env.DEBUG }} == true ]]; then
+            set -x
+          fi
+          BRANCH_VERSION="$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)"
+          BRANCH_VERSION_NEW=${BRANCH_VERSION}
+          
+          if [[ ${{ github.ref_name }} =~ ${{ env.SNAPSHOT_BRANCHES }} &&
+            ! ${{ github.ref_name }} =~ ${{ env.NO_SNAPSHOT_BRANCHES }} ]]; then
+              if [[  ${BRANCH_VERSION_NEW} != *-SNAPSHOT ]]; then
+                echo "Adding -SNAPSHOT to ${BRANCH_VERSION_NEW}"
+                BRANCH_VERSION_NEW=${BRANCH_VERSION_NEW}-SNAPSHOT
+              fi
+          fi
+          
+          if [[ ${{ github.ref_name }} =~ ${{ env.QUALIFY_BRANCHES }} &&
+            ! ${{ github.ref_name }} =~ ${{ env.NO_QUALIFY_BRANCHES }} ]]; then
+              echo "Qualifying branch's version: ${BRANCH_VERSION_NEW}"
+              BRANCH_NAME="${{ github.ref_name }}"
+              BRANCH_NAME="${BRANCH_NAME//[^a-zA-Z0-9._-]/_}"
+          
+              if [[ ${BRANCH_VERSION_NEW} == *-SNAPSHOT ]]; then
+                BRANCH_VERSION_NEW="${BRANCH_VERSION_NEW%-SNAPSHOT}-${BRANCH_NAME}-SNAPSHOT"
+              else
+                BRANCH_VERSION_NEW="${BRANCH_VERSION_NEW}-${BRANCH_NAME}"
+              fi
+          fi
+          
+          if [[  ${BRANCH_VERSION_NEW} != ${BRANCH_VERSION} ]]; then
+            if [[ -f ./mvnw ]]; then
+              ./mvnw ${{ env.MVN_VERSION_SET_COMMAND }} -DnewVersion=${BRANCH_VERSION_NEW}
+            else
+              mvn ${{ env.MVN_VERSION_SET_COMMAND }} -DnewVersion=${BRANCH_VERSION_NEW}
+            fi
+            echo "Versions changed from ${BRANCH_VERSION} to ${BRANCH_VERSION_NEW} " >> $GITHUB_STEP_SUMMARY
+          fi
+      - id: build-or-deploy
+        name: Building or deploying
+        env:
+          MVN_BUILD_DISTRIBUTION_RELEASE_REPO_USERNAME: ${{ secrets.MVN_BUILD_DISTRIBUTION_RELEASE_REPO_USERNAME }}
+          MVN_BUILD_DISTRIBUTION_RELEASE_REPO_PASSWORD: ${{ secrets.MVN_BUILD_DISTRIBUTION_RELEASE_REPO_PASSWORD }}
+          MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_USERNAME: ${{ secrets.MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_USERNAME }}
+          MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_PASSWORD: ${{ secrets.MVN_BUILD_DISTRIBUTION_SNAPSHOT_REPO_PASSWORD }}
+          MVN_BUILD_GPG_PRIVATE_KEY_PASSPHRASE: ${{ secrets.MVN_BUILD_GPG_PRIVATE_KEY_PASSPHRASE }}
+
+        run: |
+          if [[ ${{ env.DEBUG }} == true ]]; then
+            set -x
+          fi
+          
+          if [[ ${{ github.ref_name }} =~ ${{ env.DEPLOY_BRANCHES }} &&
+            ! ${{ github.ref_name }} =~ ${{ env.NO_DEPLOY_BRANCHES }} ]]; then
+            echo "Deploying branch."
+            if [[ -f ./mvnw ]]; then
+              ./mvnw ${{ env.DEPLOY_COMMAND }}
+            else
+              mvn ${{ env.DEPLOY_COMMAND }}
+            fi
+          else 
+            if [[ ${{ github.ref_name }} =~ ${{ env.BUILD_BRANCHES }} &&
+            ! ${{ github.ref_name }} =~ ${{ env.NO_BUILD_BRANCHES }} ]]; then
+              echo "Building branch."
+              if [[ -f ./mvnw ]]; then
+                ./mvnw ${{ env.BUILD_COMMAND }}
+              else
+                mvn ${{ env.BUILD_COMMAND }}
+              fi
+            else
+              echo "Not building or deploying branch"
+            fi
+          fi
